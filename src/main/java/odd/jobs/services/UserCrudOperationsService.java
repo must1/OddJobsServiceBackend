@@ -1,21 +1,28 @@
 package odd.jobs.services;
 
-import odd.jobs.entities.User;
+import odd.jobs.entities.UserEntity;
 import odd.jobs.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserCrudOperationsService {
+import java.util.Optional;
 
-    private final UserRepository userRepository;
+@Service
+public class UserCrudOperationsService implements UserDetailsService {
 
     @Autowired
-    public UserCrudOperationsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private  UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<UserEntity> user = userRepository.findByUsername(username);
+        return user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
     }
 
-    public User getUserByName(String name) {
-        return userRepository.findByName(name);
+    public void save(UserEntity user){
+        userRepository.save(user);
     }
 }
