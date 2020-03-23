@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,21 +58,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public JsonObjectAuthenticationFilter authenticationFilter() throws Exception {
         JsonObjectAuthenticationFilter filter = new JsonObjectAuthenticationFilter();
-        filter.setAuthenticationSuccessHandler(authenticationSuccessHandler); // 1
-        filter.setAuthenticationFailureHandler(authenticationFailureHandler); // 2
-        filter.setAuthenticationManager(super.authenticationManagerBean()); // 3
+        filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+        filter.setAuthenticationFailureHandler(authenticationFailureHandler);
+        filter.setAuthenticationManager(super.authenticationManagerBean());
         return filter;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-    }
-
-    @Override
-    // this unlocks css and js files and webjars -> spring security wont block css and js folders anymore.
-    public void configure(WebSecurity web){
-        web.ignoring().antMatchers("/css/**", "/js/**", "/webjars/**", "/img/**");
     }
 
     @Bean
