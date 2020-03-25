@@ -8,15 +8,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegistrationService {
 
-    @Autowired
-    private UserCrudOperationsService userService;
+    private final UserCrudOperationsService userService;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public RegistrationService(PasswordEncoder passwordEncoder, UserCrudOperationsService userService) {
+        this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
+    }
 
     public void register(UserEntity user) {
-        user.setUsername(user.getUsername().trim());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.save(user);
+        UserEntity hashedUser = user.toBuilder()
+                .username(user.getUsername().trim())
+                .password(passwordEncoder.encode(user.getPassword()))
+                .build();
+        userService.save(hashedUser);
     }
 }
