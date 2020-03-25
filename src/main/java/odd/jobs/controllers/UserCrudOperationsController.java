@@ -1,8 +1,8 @@
 package odd.jobs.controllers;
 
-import odd.jobs.entities.User;
 import odd.jobs.services.UserCrudOperationsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ public class UserCrudOperationsController {
     }
 
     @GetMapping("/users/{name}")
-    public User getUserByName(@PathVariable String name) {
-        return userCrudOperationsService.getUserByName(name);
+    public UserDetails getUserByName(@PathVariable String name) {
+        return userCrudOperationsService.loadUserByUsername(name);
     }
 }
