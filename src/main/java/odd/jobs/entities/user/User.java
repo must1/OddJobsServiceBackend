@@ -1,14 +1,12 @@
-package odd.jobs.entities;
+package odd.jobs.entities.user;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -16,8 +14,7 @@ import java.util.Collection;
 @Setter
 @Entity
 @ToString
-@Table(name="user")
-public class UserEntity implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -26,6 +23,8 @@ public class UserEntity implements UserDetails {
     private String lastName;
     private String username;
     private String password;
+    @OneToMany
+    private List<UserProfilePhoto> userProfilePhotos;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
