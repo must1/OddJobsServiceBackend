@@ -1,6 +1,6 @@
 package odd.jobs.services;
 
-import odd.jobs.entities.UserEntity;
+import odd.jobs.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,8 @@ public class RegistrationService {
         this.userService = userService;
     }
 
-    public void register(UserEntity user) {
-        UserEntity hashedUser = user.toBuilder()
+    public void register(User user) {
+        User hashedUser = user.toBuilder()
                 .username(user.getUsername().trim())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .build();
