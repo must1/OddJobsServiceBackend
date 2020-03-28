@@ -28,6 +28,7 @@ public class InitialData {
                 .lastName("Bogdaniec")
                 .username("must1")
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
+                .phoneNumber(213702137)
                 .build());
 
         userRepository.save(UserEntity.builder()
@@ -35,6 +36,7 @@ public class InitialData {
                 .lastName("Macura")
                 .username("Siterizer")
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
+                .phoneNumber(696969696)
                 .build());
     }
 }

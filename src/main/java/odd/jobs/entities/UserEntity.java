@@ -4,10 +4,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Builder(toBuilder = true)
@@ -26,6 +23,10 @@ public class UserEntity implements UserDetails {
     private String lastName;
     private String username;
     private String password;
+    private int phoneNumber;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean isBlocked;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
