@@ -1,7 +1,8 @@
 package odd.jobs.controllers;
 
 
-import odd.jobs.entities.UserEntity;
+import odd.jobs.entities.User;
+import odd.jobs.services.NotValidatedUser;
 import odd.jobs.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,17 +19,17 @@ public class RegisterController {
     private RegistrationService registrationService;
 
     @GetMapping("/register")
-    public String renderRegister(@AuthenticationPrincipal UserEntity user){
+    public String renderRegister(@AuthenticationPrincipal User user){
         if(user != null){
             //TODO return homePage path
             return "redirect:/homePage";
         }
         //TODO return register path
-        return "register";
+        return "validation=false";
     }
 
     @PostMapping("/register")
-    public String registerUser(@RequestBody UserEntity user){
+    public String registerUser(@RequestBody NotValidatedUser user){
         registrationService.register(user);
         //TODO return login path
         return "login";

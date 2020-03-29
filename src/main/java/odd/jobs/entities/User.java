@@ -13,8 +13,7 @@ import java.util.Collection;
 @Setter
 @Entity
 @ToString
-@Table(name="user")
-public class UserEntity implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -23,8 +22,8 @@ public class UserEntity implements UserDetails {
     private String lastName;
     private String username;
     private String password;
+    private String email;
     private int phoneNumber;
-
     @Column(columnDefinition = "boolean default false")
     private boolean isBlocked;
 
@@ -60,6 +59,6 @@ public class UserEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return !isBlocked;
     }
 }

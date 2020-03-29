@@ -1,6 +1,6 @@
 package odd.jobs.services;
 
-import odd.jobs.entities.UserEntity;
+import odd.jobs.entities.User;
 import odd.jobs.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,11 +22,11 @@ public class UserCrudOperationsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEntity> user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
         return user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
     }
 
-    public void save(UserEntity user){
+    public void save(User user){
         userRepository.save(user);
     }
 }
