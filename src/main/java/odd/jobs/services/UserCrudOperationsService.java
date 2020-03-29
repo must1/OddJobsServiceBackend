@@ -1,6 +1,6 @@
 package odd.jobs.services;
 
-import odd.jobs.entities.User;
+import odd.jobs.entities.user.User;
 import odd.jobs.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

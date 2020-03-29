@@ -1,7 +1,7 @@
 package odd.jobs.controllers;
 
 
-import odd.jobs.entities.User;
+import odd.jobs.entities.user.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

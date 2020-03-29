@@ -1,7 +1,7 @@
 package odd.jobs.controllers;
 
 
-import odd.jobs.entities.User;
+import odd.jobs.entities.user.User;
 import odd.jobs.services.NotValidatedUser;
 import odd.jobs.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class RegisterController {
             return "redirect:/homePage";
         }
         //TODO return register path
-        return "validation=false";
+        return "register";
     }
 
     @PostMapping("/register")
