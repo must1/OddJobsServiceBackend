@@ -2,7 +2,7 @@ package odd.jobs.services;
 
 
 import lombok.*;
-import odd.jobs.entities.User;
+import odd.jobs.entities.user.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;

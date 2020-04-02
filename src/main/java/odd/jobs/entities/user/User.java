@@ -1,4 +1,4 @@
-package odd.jobs.entities;
+package odd.jobs.entities.user;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -26,6 +27,8 @@ public class User implements UserDetails {
     private int phoneNumber;
     @Column(columnDefinition = "boolean default false")
     private boolean isBlocked;
+    @OneToMany
+    private List<UserProfilePhoto> userProfilePhotos;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
