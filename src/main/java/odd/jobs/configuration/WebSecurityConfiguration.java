@@ -4,9 +4,7 @@ import odd.jobs.configuration.authentication.JsonObjectAuthenticationFilter;
 import odd.jobs.configuration.authentication.RestAuthenticationFailureHandler;
 import odd.jobs.configuration.authentication.RestAuthenticationSuccessHandler;
 import odd.jobs.services.UserCrudOperationsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,18 +20,21 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
-@EnableWebSecurity(debug = false)
+@EnableWebSecurity()
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    UserCrudOperationsService userService;
+    private final UserCrudOperationsService userService;
 
-    @Autowired
-    private RestAuthenticationSuccessHandler authenticationSuccessHandler;
+    private final RestAuthenticationSuccessHandler authenticationSuccessHandler;
 
-    @Autowired
-    private RestAuthenticationFailureHandler authenticationFailureHandler;
+    private final RestAuthenticationFailureHandler authenticationFailureHandler;
+
+    public WebSecurityConfiguration(UserCrudOperationsService userService, RestAuthenticationSuccessHandler authenticationSuccessHandler, RestAuthenticationFailureHandler authenticationFailureHandler) {
+        this.userService = userService;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.authenticationFailureHandler = authenticationFailureHandler;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{

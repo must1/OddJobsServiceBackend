@@ -15,6 +15,7 @@ public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
+        //TODO change this
         response.sendRedirect("/login?error=true");
     }
 }
