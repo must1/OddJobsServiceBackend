@@ -6,7 +6,7 @@ public class PhoneValidator implements IValidator {
 
     @Override
     public String validate(User user) {
-        String attribute = String.valueOf(user.getPhoneNumber());
+        String attribute = user.getPhoneNumber();
         if(attribute.length() > 9){
             return "phone number too long";
         } else if(attribute.length() < 9) {

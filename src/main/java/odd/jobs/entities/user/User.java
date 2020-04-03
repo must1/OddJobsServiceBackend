@@ -25,7 +25,7 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     @Column(columnDefinition = "boolean default false")
     private boolean isBlocked;
     @OneToMany

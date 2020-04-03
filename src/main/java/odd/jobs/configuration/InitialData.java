@@ -29,7 +29,7 @@ public class InitialData {
                 .username("must1")
                 .email("analnyPenetrator6969@gmail.com")
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
-                .phoneNumber(213702137)
+                .phoneNumber("213702137")
                 .build());
 
         userRepository.save(User.builder()
@@ -38,7 +38,7 @@ public class InitialData {
                 .username("Siterizer")
                 .email("siterizer@gmail.com")
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
-                .phoneNumber(696969696)
+                .phoneNumber("696969696")
                 .build());
     }
 }
