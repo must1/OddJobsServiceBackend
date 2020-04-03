@@ -2,7 +2,6 @@ package odd.jobs.controllers;
 
 
 import odd.jobs.entities.user.User;
-import odd.jobs.services.NotValidatedUser;
 import odd.jobs.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,12 +10,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 public class RegisterController {
 
+    private final RegistrationService registrationService;
+
     @Autowired
-    private RegistrationService registrationService;
+    public RegisterController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
     @GetMapping("/register")
     public String renderRegister(@AuthenticationPrincipal User user){
@@ -29,9 +34,8 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@RequestBody NotValidatedUser user){
-        registrationService.register(user);
-        //TODO return login path
-        return "login";
+    public List<String> registerUser(@RequestBody User user){
+        //TODO return JSON
+        return registrationService.register(user);
     }
 }

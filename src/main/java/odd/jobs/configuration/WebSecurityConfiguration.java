@@ -4,6 +4,7 @@ import odd.jobs.configuration.authentication.JsonObjectAuthenticationFilter;
 import odd.jobs.configuration.authentication.RestAuthenticationFailureHandler;
 import odd.jobs.configuration.authentication.RestAuthenticationSuccessHandler;
 import odd.jobs.services.UserCrudOperationsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final RestAuthenticationFailureHandler authenticationFailureHandler;
 
+    @Autowired
     public WebSecurityConfiguration(UserCrudOperationsService userService, RestAuthenticationSuccessHandler authenticationSuccessHandler, RestAuthenticationFailureHandler authenticationFailureHandler) {
         this.userService = userService;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
@@ -50,11 +52,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .permitAll()
-
-                //Code below is for h2-console to work without login
-                .and()
-                .headers().frameOptions().disable();
+                .permitAll();
     }
 
     @Bean

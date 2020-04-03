@@ -1,9 +1,13 @@
 package odd.jobs.services;
 
 
+import odd.jobs.entities.user.User;
+import odd.jobs.services.validator.UserRegisterValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RegistrationService {
@@ -18,10 +22,13 @@ public class RegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void register(NotValidatedUser user) {
-        if(user.isCorrect()){
+    public List<String> register(User user) {
+        UserRegisterValidator validator = new UserRegisterValidator();
+        List<String> messages = validator.validate(user);
+        if(messages.isEmpty()){
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userService.save(user.validateToUser());
+            userService.save(user);
         }
+        return messages;
     }
 }

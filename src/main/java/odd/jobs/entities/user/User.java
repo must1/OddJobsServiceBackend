@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
+@Getter
 @Entity
 @ToString
 public class User implements UserDetails {
