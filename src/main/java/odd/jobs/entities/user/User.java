@@ -60,6 +60,11 @@ public class User implements UserDetails {
         return true;
     }
 
-    public String getFirstName() {return firstName;}
-    public String getLastName() {return lastName;}
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 }

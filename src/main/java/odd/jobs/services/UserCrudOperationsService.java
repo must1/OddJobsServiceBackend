@@ -44,12 +44,15 @@ public class UserCrudOperationsService implements UserDetailsService {
     public User updateUser(long id, User user) throws NotFoundException {
         User updated_user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-        updated_user.toBuilder()
+
+        updated_user = userRepository.save(updated_user.toBuilder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .password(user.getPassword())
-                .username(user.getUsername());
-        updated_user = userRepository.save(updated_user);
+                .username(user.getUsername())
+                .build());
+        System.out.println(user.getFirstName());
+        System.out.println(updated_user.getFirstName());
         return updated_user;
     }
 
