@@ -21,18 +21,22 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
-@EnableWebSecurity(debug = false)
+@EnableWebSecurity()
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    UserCrudOperationsService userService;
+    private final UserCrudOperationsService userService;
+
+    private final RestAuthenticationSuccessHandler authenticationSuccessHandler;
+
+    private final RestAuthenticationFailureHandler authenticationFailureHandler;
 
     @Autowired
-    private RestAuthenticationSuccessHandler authenticationSuccessHandler;
-
-    @Autowired
-    private RestAuthenticationFailureHandler authenticationFailureHandler;
+    public WebSecurityConfiguration(UserCrudOperationsService userService, RestAuthenticationSuccessHandler authenticationSuccessHandler, RestAuthenticationFailureHandler authenticationFailureHandler) {
+        this.userService = userService;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.authenticationFailureHandler = authenticationFailureHandler;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -48,11 +52,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .permitAll()
-
-                //Code below is for h2-console to work without login
-                .and()
-                .headers().frameOptions().disable();
+                .permitAll();
     }
 
     @Bean
