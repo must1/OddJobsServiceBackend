@@ -2,7 +2,7 @@ package odd.jobs.services.validator.components;
 
 import odd.jobs.entities.user.User;
 
-public class EmailValidator implements IValidator {
+public class EmailValidator implements IUserAttributesValidator {
     @Override
     public String validate(User user) {
         String attribute = user.getEmail();

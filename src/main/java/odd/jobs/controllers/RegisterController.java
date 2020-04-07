@@ -23,7 +23,6 @@ public class RegisterController {
 
     @PostMapping("/register")
     public List<String> registerUser(@RequestBody User user){
-        //TODO return JSON
         return registrationService.register(user);
     }
 }

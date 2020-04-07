@@ -2,7 +2,7 @@ package odd.jobs.services.validator.components;
 
 import odd.jobs.entities.user.User;
 
-public class UsernameValidator implements IValidator {
+public class UsernameValidator implements IUserAttributesValidator {
 
     @Override
     public String validate(User user) {

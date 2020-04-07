@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class UserRegisterValidator {
 
-    private List<IValidator> validators;
+    private List<IUserAttributesValidator> validators;
 
     public UserRegisterValidator(){
         validators = new ArrayList<>();
