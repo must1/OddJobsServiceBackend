@@ -26,8 +26,9 @@ public class RegistrationService {
         UserRegisterValidator validator = new UserRegisterValidator();
         List<String> messages = validator.validate(user);
         if(messages.isEmpty()){
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userService.save(user);
+            userService.save(user.toBuilder()
+                    .password(passwordEncoder.encode(user.getPassword()))
+                    .build());
         }
         return messages;
     }
