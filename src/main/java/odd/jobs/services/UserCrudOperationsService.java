@@ -35,43 +35,31 @@ public class UserCrudOperationsService implements UserDetailsService {
         return user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
     }
 
-    public List<User> getAllUsers()
-    {
-        List<User> temp=new ArrayList<>();
+    public List<User> getAllUsers() {
+        List<User> temp = new ArrayList<>();
         userRepository.findAll().forEach(temp::add);
         return temp;
     }
 
-    public User getUserById(Long userId) throws NotFoundException
-    {
-        return userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Nie znaleziono użytkownika"));
-    }
-
-    public User createUser(User user)
-    {
-        return userRepository.save(user);
-    }
-
-    public User updateUser(long id, User user) throws NotFoundException
-    {
+    public User updateUser(long id, User user) throws NotFoundException {
         User updated_user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Nie znaleziono użytkownika"));
-        updated_user.setFirstName(user.getFirstName());
-        updated_user.setLastName(user.getLastName());
-        updated_user.setUsername(user.getUsername());
-        updated_user.setPassword(user.getPassword());
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        updated_user.toBuilder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .password(user.getPassword())
+                .username(user.getUsername());
         updated_user = userRepository.save(updated_user);
         return updated_user;
     }
 
-    public void deleteUser(long id) throws NotFoundException
-    {
+    public void deleteUser(long id) throws NotFoundException {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Nie znaleziono użytkownika"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
         userRepository.delete(user);
     }
 
-    public void save(User user){
+    public void save(User user) {
         userRepository.save(user);
     }
 }

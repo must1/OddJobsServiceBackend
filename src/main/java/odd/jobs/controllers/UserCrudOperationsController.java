@@ -23,33 +23,21 @@ public class UserCrudOperationsController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers()
-    {
+    public List<User> getAllUsers() {
         return userCrudOperationsService.getAllUsers();
     }
 
-
-    @GetMapping("/users/{id}")
-    public UserDetails getUserById(@PathVariable long id) throws NotFoundException {
-        return userCrudOperationsService.getUserById(id);
-    }
-    /*
     @GetMapping("/users/{name}")
     public UserDetails getUserByName(@PathVariable String name) {
         return userCrudOperationsService.loadUserByUsername(name);
-    }
-    */
-
-    @PostMapping(value="/users", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-    public User createUser(@Valid @RequestBody User user) {
-        return userCrudOperationsService.createUser(user);
     }
 
     @PutMapping("/users/{id}")
     public User updateUser(@PathVariable(value = "id") Long id, @Valid @RequestBody User user) throws NotFoundException {
         return userCrudOperationsService.updateUser(id, user);
     }
-    @DeleteMapping(value="/users/{id}")
+
+    @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable long id) throws NotFoundException {
         userCrudOperationsService.deleteUser(id);
     }
