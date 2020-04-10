@@ -11,6 +11,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Entity
 @ToString
 public class User implements UserDetails {
@@ -22,6 +23,10 @@ public class User implements UserDetails {
     private String lastName;
     private String username;
     private String password;
+    private String email;
+    private String phoneNumber;
+    @Column(columnDefinition = "boolean default false")
+    private boolean isBlocked;
     @OneToMany
     private List<UserProfilePhoto> userProfilePhotos;
 
@@ -57,7 +62,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return !isBlocked;
     }
 
     public String getFirstName() {
