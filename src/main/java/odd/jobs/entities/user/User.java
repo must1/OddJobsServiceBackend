@@ -65,11 +65,4 @@ public class User implements UserDetails {
         return !isBlocked;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
 }
