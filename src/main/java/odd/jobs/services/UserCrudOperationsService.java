@@ -22,7 +22,6 @@ import java.util.Optional;
 
 @Service
 public class UserCrudOperationsService implements UserDetailsService {
-//TODO deleteUser method currently deletes the user and should change user's flag
     private final UserRepository userRepository;
 
     @Autowired
@@ -60,7 +59,7 @@ public class UserCrudOperationsService implements UserDetailsService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
         userRepository.delete(user);
     }
-
+    //TODO deleteUser method currently deletes the user and should change user's flag
     public void save(User user) {
         userRepository.save(user);
     }
