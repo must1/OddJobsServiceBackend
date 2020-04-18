@@ -12,9 +12,4 @@ import java.util.List;
 @Repository
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
 
-  /*  @Query("select a from Book a where  ")
-    List<Advertisement> fetchXAdvetisements(@Param("number") int number);*/
-
-/*    @Query("SELECT a FROM Advertisement WHERE a.category=:category")
-    List<Advertisement> fetchXAdvetisementsForGivenCategory(@Param("category") String category);*/
 }

@@ -21,7 +21,7 @@ public class AdvertisementFetcherController {
     }
 
     @GetMapping("/advertisements/{number}")
-    public List<ShortAdvertisement> getAllUsers(@PathVariable("number") int number) {
+    public List<ShortAdvertisement> getGeneralShortAdvertisements(@PathVariable("number") int number) {
         return shortAdvertisementFetcher.getGeneralShortAdvertisements(number);
     }
 }
