@@ -41,25 +41,29 @@ public class UserCrudOperationsService implements UserDetailsService {
         return temp;
     }
 
-    public User updateUser(long id, User user) throws NotFoundException {
-        User updatedUser = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found"));
-
-        updatedUser = userRepository.save(updatedUser.toBuilder()
+    public User updateUser(User user) {
+        return userRepository.save(User.builder()
+                .userId(user.getUserId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .password(user.getPassword())
                 .username(user.getUsername())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
                 .build());
-        return updatedUser;
     }
 
     public void deleteUser(long id) throws NotFoundException {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-        userRepository.delete(user);
+
+        User blockedUser = userRepository.save(user.toBuilder()
+                .isBlocked(true)
+                .build());
+
+        userRepository.save(blockedUser);
     }
-    //TODO deleteUser method currently deletes the user and should change user's flag
+
     public void save(User user) {
         userRepository.save(user);
     }
