@@ -26,7 +26,7 @@ public class ShortAdvertisementFetcher {
 
     public List<ShortAdvertisement> getGeneralShortAdvertisements(int number) {
         Page<Advertisement> generalAdvertisements = advertisementRepository.findAll(
-                PageRequest.of(0, 1));
+                PageRequest.of(0, number));
 
         return generalAdvertisements.stream().map(iteratedAdvertisement -> ShortAdvertisement
                 .builder()
