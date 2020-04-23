@@ -32,9 +32,9 @@ public class UserCrudOperationsController {
         return userCrudOperationsService.loadUserByUsername(name);
     }
 
-    @PutMapping("/users/{id}")
-    public User updateUser(@PathVariable(value = "id") Long id, @Valid @RequestBody User user) throws NotFoundException {
-        return userCrudOperationsService.updateUser(id, user);
+    @PutMapping("/users")
+    public User updateUser(@RequestBody User user) {
+        return userCrudOperationsService.updateUser(user);
     }
 
     @DeleteMapping("/users/{id}")
