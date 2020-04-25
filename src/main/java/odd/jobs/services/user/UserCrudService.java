@@ -1,33 +1,31 @@
-package odd.jobs.services;
+package odd.jobs.services.user;
 
 import javassist.NotFoundException;
-
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import odd.jobs.services.user.validator.SaveUserValidator;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserCrudOperationsService implements UserDetailsService {
-    private final UserRepository userRepository;
+public class UserCrudService implements UserDetailsService {
 
-    @Autowired
-    public UserCrudOperationsService(UserRepository userRepository) {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserCrudService(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -41,30 +39,34 @@ public class UserCrudOperationsService implements UserDetailsService {
         return temp;
     }
 
-    public User updateUser(User user) {
-        return userRepository.save(User.builder()
-                .userId(user.getUserId())
+    public List<String> saveUser(User user) {
+        SaveUserValidator validator = new SaveUserValidator();
+        List<String> messages = validator.validate(user);
+        if(messages.isEmpty()){
+            userRepository.save(user.toBuilder()
+                    .password(passwordEncoder.encode(user.getPassword()))
+                    .build());
+        }
+        return messages;
+    }
+
+    public User updateUser(long id, User user) throws NotFoundException {
+        User updatedUser = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        updatedUser = userRepository.save(updatedUser.toBuilder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .password(user.getPassword())
                 .username(user.getUsername())
-                .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
                 .build());
+        return updatedUser;
     }
 
     public void deleteUser(long id) throws NotFoundException {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-
-        User blockedUser = userRepository.save(user.toBuilder()
-                .isBlocked(true)
-                .build());
-
-        userRepository.save(blockedUser);
+        userRepository.delete(user);
     }
-
-    public void save(User user) {
-        userRepository.save(user);
-    }
+    //TODO deleteUser method currently deletes the user and should change user's flag
 }

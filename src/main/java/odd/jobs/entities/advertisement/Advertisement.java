@@ -14,7 +14,7 @@ import java.util.List;
 
 @Getter
 @Entity
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Advertisement {

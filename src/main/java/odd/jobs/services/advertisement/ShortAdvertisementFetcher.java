@@ -1,4 +1,4 @@
-package odd.jobs.services;
+package odd.jobs.services.advertisement;
 
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.ShortAdvertisement;

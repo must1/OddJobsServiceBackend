@@ -1,8 +1,7 @@
 package odd.jobs.controllers;
 
 import odd.jobs.entities.advertisement.ShortAdvertisement;
-import odd.jobs.entities.user.User;
-import odd.jobs.services.ShortAdvertisementFetcher;
+import odd.jobs.services.advertisement.ShortAdvertisementFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +19,7 @@ public class AdvertisementFetcherController {
         this.shortAdvertisementFetcher = shortAdvertisementFetcher;
     }
 
-    @GetMapping("/advertisements/{number}")
+    @GetMapping("/search/advertisements/{number}")
     public List<ShortAdvertisement> getGeneralShortAdvertisements(@PathVariable("number") int number) {
         return shortAdvertisementFetcher.getGeneralShortAdvertisements(number);
     }
