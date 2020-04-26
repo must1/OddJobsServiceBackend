@@ -42,7 +42,7 @@ public class UserCrudService implements UserDetailsService {
     public List<String> saveUser(User user) {
         SaveUserValidator validator = new SaveUserValidator();
         List<String> messages = validator.validate(user);
-        if(messages.isEmpty()){
+        if (messages.isEmpty()) {
             userRepository.save(user.toBuilder()
                     .password(passwordEncoder.encode(user.getPassword()))
                     .build());
@@ -62,7 +62,7 @@ public class UserCrudService implements UserDetailsService {
                 .build());
     }
 
-    public void deleteUser(long id) throws NotFoundException {
+    public void blockUser(long id) throws NotFoundException {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
 

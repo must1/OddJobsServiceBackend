@@ -40,8 +40,8 @@ public class UserCrudController {
         return userService.updateUser(user);
     }
 
-    @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable long id) throws NotFoundException {
-        userService.deleteUser(id);
+    @PatchMapping("/users/{id}")
+    public void blockUser(@PathVariable long id) throws NotFoundException {
+        userService.blockUser(id);
     }
 }
