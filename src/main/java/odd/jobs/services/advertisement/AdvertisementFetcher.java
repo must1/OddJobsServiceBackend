@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ShortAdvertisementFetcher {
+public class AdvertisementFetcher {
 
     private static final int MAXIMUM_CHARACTERS_FOR_DESCRIPTION = 40;
     private static final int MAXIMUM_CHARACTERS_FOR_TITLE = 10;
     private final AdvertisementRepository advertisementRepository;
 
     @Autowired
-    public ShortAdvertisementFetcher(AdvertisementRepository advertisementRepository) {
+    public AdvertisementFetcher(AdvertisementRepository advertisementRepository) {
         this.advertisementRepository = advertisementRepository;
     }
 
