@@ -36,7 +36,7 @@ public class UserCrudController {
     }
 
     @PatchMapping("/users")
-    public User updateUser(@PathVariable(value = "id") Long id, @Valid @RequestBody User user) throws NotFoundException {
+    public User updateUser(@Valid @RequestBody User user) throws NotFoundException {
         return userService.updateUser(user);
     }
 
