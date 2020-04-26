@@ -1,8 +1,8 @@
-package odd.jobs.services.validator.components;
+package odd.jobs.services.user.validator.components;
 
 import odd.jobs.entities.user.User;
 
-public class LastNameValidator implements IUserAttributesValidator {
+public class UserLastNameValidator implements IUserAttributesValidator {
 
     @Override
     public String validate(User user) {

@@ -3,7 +3,7 @@ package odd.jobs.configuration;
 import odd.jobs.configuration.authentication.JsonObjectAuthenticationFilter;
 import odd.jobs.configuration.authentication.RestAuthenticationFailureHandler;
 import odd.jobs.configuration.authentication.RestAuthenticationSuccessHandler;
-import odd.jobs.services.UserCrudOperationsService;
+import odd.jobs.services.user.UserCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,14 +25,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserCrudOperationsService userService;
+    private final UserCrudService userService;
 
     private final RestAuthenticationSuccessHandler authenticationSuccessHandler;
 
     private final RestAuthenticationFailureHandler authenticationFailureHandler;
 
     @Autowired
-    public WebSecurityConfiguration(UserCrudOperationsService userService, RestAuthenticationSuccessHandler authenticationSuccessHandler, RestAuthenticationFailureHandler authenticationFailureHandler) {
+    public WebSecurityConfiguration(UserCrudService userService, RestAuthenticationSuccessHandler authenticationSuccessHandler, RestAuthenticationFailureHandler authenticationFailureHandler) {
         this.userService = userService;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.authenticationFailureHandler = authenticationFailureHandler;
