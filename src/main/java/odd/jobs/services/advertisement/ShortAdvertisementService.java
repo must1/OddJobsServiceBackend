@@ -1,10 +1,13 @@
 package odd.jobs.services.advertisement;
 
 import odd.jobs.entities.advertisement.Advertisement;
+import odd.jobs.entities.advertisement.AdvertisementCategory;
 import odd.jobs.entities.advertisement.ShortAdvertisement;
 import odd.jobs.repositories.AdvertisementRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -40,5 +43,16 @@ public class ShortAdvertisementService {
 
     private String shortenText(String description, int maximumCharacters) {
         return StringUtils.abbreviate(description, maximumCharacters);
+    }
+
+    public List<Advertisement> getSpecificShortAdvertisements(String city, AdvertisementCategory category) {
+        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny();
+
+        Advertisement example = Advertisement.builder()
+                .advertisementCategory(category)
+                .city(city)
+                .build();
+
+        return advertisementRepository.findAll(Example.of(example, exampleMatcher));
     }
 }

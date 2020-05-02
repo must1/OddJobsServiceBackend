@@ -27,6 +27,7 @@ public class Advertisement {
     private AdvertisementCategory advertisementCategory;
     private LocalDateTime dateTime;
     private boolean featured;
+    private String city;
     @OneToMany
     private List<AdvertisementPhoto> photos;
 }

@@ -60,10 +60,11 @@ public class InitialData {
                 .featured(false)
                 .photos(null)
                 .title("TiTitle 2tle 1")
+                .city("KRAKOW")
                 .build());
 
         advertisementRepository.save(Advertisement.builder()
-                .advertisementCategory(AdvertisementCategory.ANIMALSCARE)
+                .advertisementCategory(AdvertisementCategory.HOUSEWORK)
                 .dateTime(LocalDateTime.now())
                 .description("LAAAAAAAAAAAAAAAAAAALA" +
                         "AALAAAAAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAALAAAAA" +
@@ -71,6 +72,7 @@ public class InitialData {
                 .featured(false)
                 .photos(null)
                 .title("TTitle 2Title 2Title 2itle 2")
+                .city("WARSZAWA")
                 .build());
     }
 }
