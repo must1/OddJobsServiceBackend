@@ -7,7 +7,7 @@ public class UserPasswordValidator implements IUserAttributesValidator {
     @Override
     public String validate(User user) {
         String attribute = user.getPassword();
-        if(attribute.length() > 30){
+        if(attribute.length() > 71){
             return "password is too long";
         } else if(attribute.length() < 3) {
             return "password is too short";

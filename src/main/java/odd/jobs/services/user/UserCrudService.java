@@ -4,8 +4,6 @@ import javassist.NotFoundException;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.UserRepository;
 import odd.jobs.services.user.validator.SaveUserValidator;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -55,21 +53,15 @@ public class UserCrudService implements UserDetailsService {
         if((requester == null) || (!requester.getUsername().equals(update.getUsername()))){
             return Collections.singletonList("you cannot update not yours data");
         }
+        User userToUpdate = userRepository.findByUsername(update.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        User userToSave = new NullAttributesUpdateFiller(userToUpdate, update).update();
 
         SaveUserValidator validator = new SaveUserValidator();
-        List<String> messages = validator.validate(update);
+        List<String> messages = validator.validate(userToSave);
         if(messages.isEmpty()){
-            User userToUpdate = userRepository.findByUsername(update.getUsername())
-                    .orElseThrow(() -> new NotFoundException("User not found"));
-
-            userRepository.save(userToUpdate.toBuilder()
-                    .firstName(update.getFirstName())
-                    .lastName(update.getLastName())
-                    .password(passwordEncoder.encode(update.getPassword()))
-                    .username(update.getUsername())
-                    .email(update.getEmail())
-                    .phoneNumber(update.getPhoneNumber())
-                    .build());
+            userRepository.save(userToSave);
         }
         return messages;
     }
