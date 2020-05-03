@@ -1,6 +1,5 @@
 package odd.jobs.services.advertisement;
 
-import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.services.advertisement.validator.SaveAdvertisementValidator;
@@ -26,13 +25,13 @@ public class AdvertisementCrudService {
         return advertisement.orElse(new Advertisement());
     }
 
-    public List<String> saveAdvertisement(Advertisement advertisement){
+    public List<String> saveAdvertisement(Advertisement advertisement) {
         SaveAdvertisementValidator validator = new SaveAdvertisementValidator();
         List<String> messages = validator.validate(advertisement);
-        if(messages.isEmpty()){
+        if (messages.isEmpty()) {
             advertisementRepository.save(advertisement.toBuilder()
-            .dateTime(LocalDateTime.now())
-            .build());
+                    .dateTime(LocalDateTime.now())
+                    .build());
         }
         return messages;
     }
