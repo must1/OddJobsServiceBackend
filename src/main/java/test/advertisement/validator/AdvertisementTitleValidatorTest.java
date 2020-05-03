@@ -48,7 +48,7 @@ class AdvertisementTitleValidatorTest {
 
     @Test
     void titleWithIllegalCharactersIsInvalid() {
-        int length = random.nextInt(100) + 10;
+        int length = random.nextInt(20) + 10;
         String title = titleGenerator(length) + "/";
         advertisement = advertisement.toBuilder().title(title).build();
         Assertions.assertEquals(advertisementTitleValidator.validate(advertisement), "title contains illegal character");

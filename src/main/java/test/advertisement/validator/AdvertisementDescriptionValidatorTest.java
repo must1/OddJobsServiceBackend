@@ -24,7 +24,7 @@ class AdvertisementDescriptionValidatorTest {
     }
 
     private String descriptionGenerator(int length) {
-        return random.ints(97, 123)
+        return random.ints(97, 122)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
