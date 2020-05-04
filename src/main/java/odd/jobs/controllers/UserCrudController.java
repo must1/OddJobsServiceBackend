@@ -4,6 +4,7 @@ import javassist.NotFoundException;
 import odd.jobs.entities.user.User;
 import odd.jobs.services.user.UserCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,12 +37,14 @@ public class UserCrudController {
     }
 
     @PatchMapping("/users")
-    public User updateUser(@Valid @RequestBody User user) throws NotFoundException {
-        return userService.updateUser(user);
+    public List<String> updateUser(@Valid @RequestBody User user,
+                           @AuthenticationPrincipal UserDetails requester) throws NotFoundException {
+        return userService.updateUser(user, requester);
     }
 
-    @PatchMapping("/users/{id}")
-    public void blockUser(@PathVariable long id) throws NotFoundException {
-        userService.blockUser(id);
+    @DeleteMapping("/users/{username}")
+    public String deleteUser(@PathVariable String username,
+                           @AuthenticationPrincipal UserDetails requester) throws NotFoundException {
+        return userService.deleteUser(username, requester);
     }
 }

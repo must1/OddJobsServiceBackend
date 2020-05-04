@@ -8,7 +8,7 @@ public class AdvertisementDescriptionValidator implements IAdvertisementAttribut
         String attribute = advertisement.getDescription();
         if(attribute.length() > 255){
             return "description is too long";
-        } else if(!attribute.matches("[A-Za-z0-9]+")){
+        } else if(!attribute.matches("^\\s*[\\da-zA-Z][\\da-zA-Z\\s]*$")){
             return "description contains illegal character";
         }
         return null;

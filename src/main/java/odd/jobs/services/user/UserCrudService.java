@@ -11,9 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserCrudService implements UserDetailsService {
@@ -42,7 +40,7 @@ public class UserCrudService implements UserDetailsService {
     public List<String> saveUser(User user) {
         SaveUserValidator validator = new SaveUserValidator();
         List<String> messages = validator.validate(user);
-        if (messages.isEmpty()) {
+        if(messages.isEmpty()){
             userRepository.save(user.toBuilder()
                     .password(passwordEncoder.encode(user.getPassword()))
                     .build());
@@ -50,26 +48,38 @@ public class UserCrudService implements UserDetailsService {
         return messages;
     }
 
-    public User updateUser(User user) {
-        return userRepository.save(User.builder()
-                .userId(user.getUserId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .password(user.getPassword())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
-                .build());
-    }
+    public List<String> updateUser(User update, UserDetails requester) throws NotFoundException {
 
-    public void blockUser(long id) throws NotFoundException {
-        User user = userRepository.findById(id)
+        if((requester == null) || (!requester.getUsername().equals(update.getUsername()))){
+            return Collections.singletonList("you cannot update not yours data");
+        }
+        User userToUpdate = userRepository.findByUsername(update.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        User blockedUser = userRepository.save(user.toBuilder()
+        User userToSave = new NullAttributesUpdateFiller(userToUpdate, update).update();
+
+        SaveUserValidator validator = new SaveUserValidator();
+        List<String> messages = validator.validate(userToSave);
+        if(messages.isEmpty()){
+            userRepository.save(userToSave);
+        }
+        return messages;
+    }
+
+    public String deleteUser(String username, UserDetails requester) throws NotFoundException {
+
+        if(requester == null){
+            return ("false");
+        }
+        User userToDelete = userRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        if(!requester.getUsername().equals(userToDelete.getUsername())){
+            return ("false");
+        }
+        userRepository.save(userToDelete.toBuilder()
                 .isBlocked(true)
                 .build());
-
-        userRepository.save(blockedUser);
+        return("true");
     }
 }
