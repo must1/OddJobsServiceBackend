@@ -21,40 +21,43 @@ class UserEmailValidatorTest {
         user = new User();
     }
 
-    private String emailPartGenerator(int length)
-    {
-        Random random=new Random();
+    private String emailPartGenerator(int length) {
+        Random random = new Random();
         return random.ints(97, 123)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
+
     @Test
-    void testIfResponseIsPropertyWhenEmailIsCorrect()
-    {
+    void testIfResponseIsPropertyWhenEmailIsCorrect() {
         int length = 10;
-        String email=emailPartGenerator(length)+"@"+emailPartGenerator(length);
-        user=user.toBuilder().email(email).build();
+        String email = emailPartGenerator(length) + "@" + emailPartGenerator(length);
+        user = user.toBuilder()
+                .email(email)
+                .build();
         Assertions.assertNull(userEmailValidator.validate(user));
     }
 
     @Test
-    void testIfResponseIsPropertyWhenEmailDoNotHaveAtSign()
-    {
+    void testIfResponseIsPropertyWhenEmailDoNotHaveAtSign() {
         int length = 20;
         String email = emailPartGenerator(length);
-        user=user.toBuilder().email(email).build();
-        Assertions.assertEquals(userEmailValidator.validate(user),"incorrect email address");
-    }
-    @Test
-    void testIfResponseIsPropertyWhenEmailHasIllegalCharacter()
-    {
-        int length = 10;
-        String email=emailPartGenerator(length)+"@"+emailPartGenerator(length)+"/";
-        user=user.toBuilder().email(email).build();
-        Assertions.assertEquals(userEmailValidator.validate(user),"incorrect email address");
+        user = user.toBuilder()
+                .email(email)
+                .build();
+        Assertions.assertEquals(userEmailValidator.validate(user), "incorrect email address");
     }
 
+    @Test
+    void testIfResponseIsPropertyWhenEmailHasIllegalCharacter() {
+        int length = 10;
+        String email = emailPartGenerator(length) + "@" + emailPartGenerator(length) + "/";
+        user = user.toBuilder()
+                .email(email)
+                .build();
+        Assertions.assertEquals(userEmailValidator.validate(user), "incorrect email address");
+    }
 
 
 }

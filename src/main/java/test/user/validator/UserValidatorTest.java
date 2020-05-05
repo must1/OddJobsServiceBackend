@@ -22,7 +22,7 @@ class UserValidatorTest {
 
     @Test
     void testIfResponseIsPropertyWhenUserIsCorrect() {
-        user=user.toBuilder()
+        user = user.toBuilder()
                 .phoneNumber("111222333")
                 .password("czerwonebiedronki123!")
                 .firstName("Jan")
@@ -35,7 +35,7 @@ class UserValidatorTest {
 
     @Test
     void testIfResponseIsPropertyWhenUserIsIncorrect() {
-        user=user.toBuilder()
+        user = user.toBuilder()
                 .phoneNumber("111222333444")//phoneNumber must have 9 digits
                 .password("czerwonebiedronki123!")
                 .firstName("Jan")

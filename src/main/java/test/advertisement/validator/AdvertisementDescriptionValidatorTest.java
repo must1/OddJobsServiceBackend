@@ -22,7 +22,7 @@ class AdvertisementDescriptionValidatorTest {
     }
 
     private String descriptionGenerator(int length) {
-        Random random=new Random();
+        Random random = new Random();
         return random.ints(97, 122)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -33,7 +33,9 @@ class AdvertisementDescriptionValidatorTest {
     void testIfResponseIsPropertyWhenDescriptionIsCorrect() {
         int length = 20;
         String description = descriptionGenerator(length);
-        advertisement = advertisement.toBuilder().description(description).build();
+        advertisement = advertisement.toBuilder()
+                .description(description)
+                .build();
         Assertions.assertNull(advertisementDescriptionValidator.validate(advertisement));
     }
 
@@ -41,7 +43,9 @@ class AdvertisementDescriptionValidatorTest {
     void testIfResponseIsPropertyWhenDescriptionIsTooLong() {
         int length = 300;
         String description = descriptionGenerator(length);
-        advertisement = advertisement.toBuilder().description(description).build();
+        advertisement = advertisement.toBuilder()
+                .description(description)
+                .build();
         Assertions.assertEquals(advertisementDescriptionValidator.validate(advertisement), "description is too long");
     }
 
@@ -49,7 +53,9 @@ class AdvertisementDescriptionValidatorTest {
     void testIfResponseIsPropertyWhenDescriptionIsTooShort() {
         int length = 20;
         String description = descriptionGenerator(length) + "/";
-        advertisement = advertisement.toBuilder().description(description).build();
+        advertisement = advertisement.toBuilder()
+                .description(description)
+                .build();
         Assertions.assertEquals(advertisementDescriptionValidator.validate(advertisement), "description contains illegal character");
     }
 }

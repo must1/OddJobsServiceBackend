@@ -22,7 +22,7 @@ class AdvertisementValidatorTest {
 
     @Test
     void testIfResponseIsPropertyWhenAdvertisementIsCorrect() {
-        advertisement=advertisement.toBuilder()
+        advertisement = advertisement.toBuilder()
                 .title("Lawn mowing in Krakow")
                 .description("I am looking for a student willing to mow our lawn in Krakow on XYZ street for 100 PLN")
                 .advertisementCategory(AdvertisementCategory.GARDENCARE)
@@ -32,7 +32,7 @@ class AdvertisementValidatorTest {
 
     @Test
     void testIfResponseIsPropertyWhenAdvertisementIsIncorrect() {
-        advertisement=advertisement.toBuilder()
+        advertisement = advertisement.toBuilder()
                 .title("Lawn mowing in Krakow.") //'.' is illegal character in title
                 .description("I am looking for a student willing to mow our lawn in Krakow on XYZ street for 100 PLN")
                 .advertisementCategory(AdvertisementCategory.GARDENCARE)

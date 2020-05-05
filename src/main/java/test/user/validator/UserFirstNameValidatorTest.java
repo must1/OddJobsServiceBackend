@@ -22,9 +22,8 @@ class UserFirstNameValidatorTest {
         user = new User();
     }
 
-    private String firstNameGenerator(int length)
-    {
-        Random random=new Random();
+    private String firstNameGenerator(int length) {
+        Random random = new Random();
         return random.ints(97, 123)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -32,38 +31,42 @@ class UserFirstNameValidatorTest {
     }
 
     @Test
-    void testIfResponseIsPropertyWhenFirstNameIsCorrect()
-    {
+    void testIfResponseIsPropertyWhenFirstNameIsCorrect() {
         int length = 10;
         String firstName = firstNameGenerator(length);
-        user=user.toBuilder().firstName(firstName).build();
+        user = user.toBuilder()
+                .firstName(firstName)
+                .build();
         Assertions.assertNull(userFirstNameValidator.validate(user));
     }
 
     @Test
-    void testIfResponseIsPropertyWhenFirstNameIsTooShort()
-    {
+    void testIfResponseIsPropertyWhenFirstNameIsTooShort() {
         int length = 2;
         String firstName = firstNameGenerator(length);
-        user=user.toBuilder().firstName(firstName).build();
-        Assertions.assertEquals(userFirstNameValidator.validate(user),"firstName is too short");
+        user = user.toBuilder()
+                .firstName(firstName)
+                .build();
+        Assertions.assertEquals(userFirstNameValidator.validate(user), "firstName is too short");
     }
 
     @Test
-    void testIfResponseIsPropertyWhenFirstNameIsTooLong()
-    {
+    void testIfResponseIsPropertyWhenFirstNameIsTooLong() {
         int length = 40;
         String firstName = firstNameGenerator(length);
-        user=user.toBuilder().firstName(firstName).build();
-        Assertions.assertEquals(userFirstNameValidator.validate(user),"firstName is too long");
+        user = user.toBuilder()
+                .firstName(firstName)
+                .build();
+        Assertions.assertEquals(userFirstNameValidator.validate(user), "firstName is too long");
     }
 
     @Test
-    void testIfResponseIsPropertyWhenFirstNameHasIllegalCharacter()
-    {
+    void testIfResponseIsPropertyWhenFirstNameHasIllegalCharacter() {
         int length = 20;
-        String firstName = firstNameGenerator(length)+"/";
-        user=user.toBuilder().firstName(firstName).build();
-        Assertions.assertEquals(userFirstNameValidator.validate(user),"firstName contains illegal character");
+        String firstName = firstNameGenerator(length) + "/";
+        user = user.toBuilder()
+                .firstName(firstName)
+                .build();
+        Assertions.assertEquals(userFirstNameValidator.validate(user), "firstName contains illegal character");
     }
 }

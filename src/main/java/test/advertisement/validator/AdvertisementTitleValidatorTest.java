@@ -22,7 +22,7 @@ class AdvertisementTitleValidatorTest {
     }
 
     private String titleGenerator(int length) {
-        Random random= new Random();
+        Random random = new Random();
         return random.ints(97, 123)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -33,7 +33,9 @@ class AdvertisementTitleValidatorTest {
     void testIfResponseIsPropertyWhenTitleIsCorrect() {
         int length = 20;
         String title = titleGenerator(length);
-        advertisement = advertisement.toBuilder().title(title).build();
+        advertisement = advertisement.toBuilder()
+                .title(title)
+                .build();
         Assertions.assertNull(advertisementTitleValidator.validate(advertisement));
     }
 
@@ -49,7 +51,9 @@ class AdvertisementTitleValidatorTest {
     void testIfResponseIsPropertyWhenTitleIsTooShort() {
         int length = 10;
         String title = titleGenerator(length);
-        advertisement = advertisement.toBuilder().title(title).build();
+        advertisement = advertisement.toBuilder()
+                .title(title)
+                .build();
         Assertions.assertEquals(advertisementTitleValidator.validate(advertisement), "title is too short");
     }
 
@@ -57,7 +61,9 @@ class AdvertisementTitleValidatorTest {
     void testIfResponseIsPropertyWhenTitleHasIllegalCharacter() {
         int length = 20;
         String title = titleGenerator(length) + "/";
-        advertisement = advertisement.toBuilder().title(title).build();
+        advertisement = advertisement.toBuilder()
+                .title(title)
+                .build();
         Assertions.assertEquals(advertisementTitleValidator.validate(advertisement), "title contains illegal character");
     }
 

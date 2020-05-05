@@ -23,9 +23,8 @@ class UserPasswordValidatorTest {
         user = new User();
     }
 
-    private String passwordGenerator(int length)
-    {
-        Random random=new Random();
+    private String passwordGenerator(int length) {
+        Random random = new Random();
         return random.ints(97, 123)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -33,38 +32,42 @@ class UserPasswordValidatorTest {
     }
 
     @Test
-    void testIfResponseIsPropertyWhenPasswordIsCorrect()
-    {
+    void testIfResponseIsPropertyWhenPasswordIsCorrect() {
         int length = 10;
         String password = passwordGenerator(length);
-        user=user.toBuilder().password(password).build();
+        user = user.toBuilder()
+                .password(password)
+                .build();
         Assertions.assertNull(userPasswordValidator.validate(user));
     }
 
     @Test
-    void testIfResponseIsPropertyWhenPasswordIsTooShort()
-    {
+    void testIfResponseIsPropertyWhenPasswordIsTooShort() {
         int length = 2;
         String password = passwordGenerator(length);
-        user=user.toBuilder().password(password).build();
-        Assertions.assertEquals(userPasswordValidator.validate(user),"password is too short");
+        user = user.toBuilder()
+                .password(password)
+                .build();
+        Assertions.assertEquals(userPasswordValidator.validate(user), "password is too short");
     }
 
     @Test
-    void testIfResponseIsPropertyWhenPasswordIsTooLong()
-    {
+    void testIfResponseIsPropertyWhenPasswordIsTooLong() {
         int length = 100;
         String password = passwordGenerator(length);
-        user=user.toBuilder().password(password).build();
-        Assertions.assertEquals(userPasswordValidator.validate(user),"password is too long");
+        user = user.toBuilder()
+                .password(password)
+                .build();
+        Assertions.assertEquals(userPasswordValidator.validate(user), "password is too long");
     }
 
     @Test
-    void testIfResponseIsPropertyWhenPasswordHasSpaceCharacter()
-    {
+    void testIfResponseIsPropertyWhenPasswordHasSpaceCharacter() {
         int length = 20;
-        String password = passwordGenerator(length)+" ";
-        user=user.toBuilder().password(password).build();
-        Assertions.assertEquals(userPasswordValidator.validate(user),"password contains illegal character");
+        String password = passwordGenerator(length) + " ";
+        user = user.toBuilder()
+                .password(password)
+                .build();
+        Assertions.assertEquals(userPasswordValidator.validate(user), "password contains illegal character");
     }
 }

@@ -16,52 +16,56 @@ class UserPhoneValidatorTest {
     void validatorInit() {
         userPhoneValidator = new UserPhoneValidator();
     }
+
     @BeforeEach
     void userInit() {
         user = new User();
     }
 
-    private String phoneGenerator(int length)
-    {
+    private String phoneGenerator(int length) {
         Random random = new Random();
-        long minNumber=(long)Math.pow(10,length-1);
-        long maxNumber=(long)Math.pow(10,length)-1;
-        return String.valueOf(Math.abs(random.nextLong())%(maxNumber-minNumber)+minNumber);
+        long minNumber = (long) Math.pow(10, length - 1);
+        long maxNumber = (long) Math.pow(10, length) - 1;
+        return String.valueOf(Math.abs(random.nextLong()) % (maxNumber - minNumber) + minNumber);
     }
 
     @Test
-    void testIfResponseIsPropertyWhenPhoneNumberIsCorrect()
-    {
-        int length=9;
+    void testIfResponseIsPropertyWhenPhoneNumberIsCorrect() {
+        int length = 9;
         String phoneNumber = phoneGenerator(length);
-        user=user.toBuilder().phoneNumber(phoneNumber).build();
+        user = user.toBuilder()
+                .phoneNumber(phoneNumber)
+                .build();
         Assertions.assertNull(userPhoneValidator.validate(user));
     }
 
     @Test
-    void testIfResponseIsPropertyWhenPhoneNumberIsTooShort()
-    {
+    void testIfResponseIsPropertyWhenPhoneNumberIsTooShort() {
         int length = 8;
         String phoneNumber = phoneGenerator(length);
-        user=user.toBuilder().phoneNumber(phoneNumber).build();
-        Assertions.assertEquals(userPhoneValidator.validate(user),"phone number too short");
+        user = user.toBuilder()
+                .phoneNumber(phoneNumber)
+                .build();
+        Assertions.assertEquals(userPhoneValidator.validate(user), "phone number too short");
     }
 
     @Test
-    void testIfResponseIsPropertyWhenPhoneNumberIsTooLong()
-    {
+    void testIfResponseIsPropertyWhenPhoneNumberIsTooLong() {
         int length = 10;
         String phoneNumber = phoneGenerator(length);
-        user=user.toBuilder().phoneNumber(phoneNumber).build();
-        Assertions.assertEquals(userPhoneValidator.validate(user),"phone number too long");
+        user = user.toBuilder()
+                .phoneNumber(phoneNumber)
+                .build();
+        Assertions.assertEquals(userPhoneValidator.validate(user), "phone number too long");
     }
 
     @Test
-    void testIfResponseIsPropertyWhenPhoneNumberContainsNonDigitCharacter()
-    {
+    void testIfResponseIsPropertyWhenPhoneNumberContainsNonDigitCharacter() {
         int length = 8;
         String phoneNumber = phoneGenerator(length);
-        user=user.toBuilder().phoneNumber(phoneNumber+"a").build();
-        Assertions.assertEquals(userPhoneValidator.validate(user),"phone number must consist of numbers");
+        user = user.toBuilder()
+                .phoneNumber(phoneNumber + "a")
+                .build();
+        Assertions.assertEquals(userPhoneValidator.validate(user), "phone number must consist of numbers");
     }
 }
