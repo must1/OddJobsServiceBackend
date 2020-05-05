@@ -1,12 +1,14 @@
 package odd.jobs.services.advertisement;
 
 import odd.jobs.entities.advertisement.Advertisement;
+import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.services.advertisement.validator.SaveAdvertisementValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,10 @@ public class AdvertisementCrudService {
     @Autowired
     public AdvertisementCrudService(AdvertisementRepository advertisementRepository) {
         this.advertisementRepository = advertisementRepository;
+    }
+
+    public List<Advertisement> getAllAdvertisements() {
+        return new ArrayList<>(advertisementRepository.findAll());
     }
 
     public Advertisement loadById(long Id) {

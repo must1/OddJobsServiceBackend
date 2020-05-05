@@ -11,7 +11,7 @@ public class AdvertisementTitleValidator implements IAdvertisementAttributesVali
         } else if(attribute.length() < 13) {
             return "title is too short";
         }
-        else if(!attribute.matches("[A-Za-z0-9]+")){
+        else if(!attribute.matches("^\\s*[\\da-zA-Z][\\da-zA-Z\\s]*$")){
             return "title contains illegal character";
         }
         return null;
