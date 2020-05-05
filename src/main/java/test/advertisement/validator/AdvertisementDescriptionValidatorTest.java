@@ -10,12 +10,10 @@ import java.util.Random;
 class AdvertisementDescriptionValidatorTest {
     AdvertisementDescriptionValidator advertisementDescriptionValidator;
     Advertisement advertisement;
-    Random random;
 
     @BeforeAll
     void validatorInit() {
         advertisementDescriptionValidator = new AdvertisementDescriptionValidator();
-        random = new Random();
     }
 
     @BeforeEach
@@ -24,6 +22,7 @@ class AdvertisementDescriptionValidatorTest {
     }
 
     private String descriptionGenerator(int length) {
+        Random random=new Random();
         return random.ints(97, 122)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -31,15 +30,15 @@ class AdvertisementDescriptionValidatorTest {
     }
 
     @Test
-    void validDescription() {
-        int length = random.nextInt(244) + 10;
+    void testIfResponseIsPropertyWhenDescriptionIsCorrect() {
+        int length = 20;
         String description = descriptionGenerator(length);
         advertisement = advertisement.toBuilder().description(description).build();
         Assertions.assertNull(advertisementDescriptionValidator.validate(advertisement));
     }
 
     @Test
-    void tooLongDescriptionIsInvalid() {
+    void testIfResponseIsPropertyWhenDescriptionIsTooLong() {
         int length = 300;
         String description = descriptionGenerator(length);
         advertisement = advertisement.toBuilder().description(description).build();
@@ -47,8 +46,8 @@ class AdvertisementDescriptionValidatorTest {
     }
 
     @Test
-    void descriptionWithIllegalCharactersIsInvalid() {
-        int length = random.nextInt(100) + 10;
+    void testIfResponseIsPropertyWhenDescriptionIsTooShort() {
+        int length = 20;
         String description = descriptionGenerator(length) + "/";
         advertisement = advertisement.toBuilder().description(description).build();
         Assertions.assertEquals(advertisementDescriptionValidator.validate(advertisement), "description contains illegal character");

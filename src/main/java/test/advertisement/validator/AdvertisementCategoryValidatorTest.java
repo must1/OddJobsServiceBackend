@@ -21,7 +21,7 @@ class AdvertisementCategoryValidatorTest {
     }
 
     @Test
-    void validAdvertisement() {
+    void testIfResponseIsPropertyWhenCategoryIsCorrect() {
         advertisement = new Advertisement();
         for (AdvertisementCategory category : AdvertisementCategory.values()) {
             advertisement = advertisement.toBuilder().advertisementCategory(category).build();

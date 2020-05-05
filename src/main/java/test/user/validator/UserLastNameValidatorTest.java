@@ -11,12 +11,11 @@ import java.util.Random;
 class UserLastNameValidatorTest {
     UserLastNameValidator userLastNameValidator;
     User user;
-    Random random;
+
 
     @BeforeAll
     void validatorInit() {
         userLastNameValidator = new UserLastNameValidator();
-        random=new Random();
     }
 
     @BeforeEach
@@ -25,22 +24,23 @@ class UserLastNameValidatorTest {
     }
     private String lastNameGenerator(int length)
     {
+        Random random=new Random();
         return random.ints(97, 123)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
     @Test
-    void validLastName()
+    void testIfResponseIsPropertyWhenLastNameIsCorrect()
     {
-        int length = random.nextInt(25) + 3;
+        int length = 10;
         String lastName = lastNameGenerator(length);
         user=user.toBuilder().lastName(lastName).build();
         Assertions.assertNull(userLastNameValidator.validate(user));
     }
 
     @Test
-    void tooShortLastNameIsInvalid()
+    void testIfResponseIsPropertyWhenLastNameIsTooShort()
     {
         int length = 2;
         String lastName = lastNameGenerator(length);
@@ -49,7 +49,7 @@ class UserLastNameValidatorTest {
     }
 
     @Test
-    void tooLongLastNameIsInvalid()
+    void testIfResponseIsPropertyWhenLastNameIsTooLong()
     {
         int length = 40;
         String lastName = lastNameGenerator(length);
@@ -58,7 +58,7 @@ class UserLastNameValidatorTest {
     }
 
     @Test
-    void lastNameWithIllegalSignIsInvalid()
+    void testIfResponseIsPropertyWhenLastNameHasIllegarCharacter()
     {
         int length = 20;
         String lastName = lastNameGenerator(length)+"/";

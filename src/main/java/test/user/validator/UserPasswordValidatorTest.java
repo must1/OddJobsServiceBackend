@@ -11,20 +11,11 @@ import java.util.Random;
 class UserPasswordValidatorTest {
     UserPasswordValidator userPasswordValidator;
     User user;
-    Random random;
+
 
     @BeforeAll
     void validatorInit() {
         userPasswordValidator = new UserPasswordValidator();
-        random = new Random();
-    }
-
-    private String passwordGenerator(int length)
-    {
-        return random.ints(97, 123)
-                .limit(length)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
     }
 
     @BeforeEach
@@ -32,17 +23,26 @@ class UserPasswordValidatorTest {
         user = new User();
     }
 
-    @Test
-    void validPassword()
+    private String passwordGenerator(int length)
     {
-        int length = random.nextInt(25) + 3;
+        Random random=new Random();
+        return random.ints(97, 123)
+                .limit(length)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+    }
+
+    @Test
+    void testIfResponseIsPropertyWhenPasswordIsCorrect()
+    {
+        int length = 10;
         String password = passwordGenerator(length);
         user=user.toBuilder().password(password).build();
         Assertions.assertNull(userPasswordValidator.validate(user));
     }
 
     @Test
-    void tooShortpasswordIsInvalid()
+    void testIfResponseIsPropertyWhenPasswordIsTooShort()
     {
         int length = 2;
         String password = passwordGenerator(length);
@@ -51,7 +51,7 @@ class UserPasswordValidatorTest {
     }
 
     @Test
-    void tooLongPasswordIsInvalid()
+    void testIfResponseIsPropertyWhenPasswordIsTooLong()
     {
         int length = 40;
         String password = passwordGenerator(length);
@@ -60,7 +60,7 @@ class UserPasswordValidatorTest {
     }
 
     @Test
-    void passwordIncludingSpaceIsInvalid()
+    void testIfResponseIsPropertyWhenPasswordHasSpaceCharacter()
     {
         int length = 20;
         String password = passwordGenerator(length)+" ";

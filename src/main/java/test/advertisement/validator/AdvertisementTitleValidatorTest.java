@@ -10,12 +10,10 @@ import java.util.Random;
 class AdvertisementTitleValidatorTest {
     AdvertisementTitleValidator advertisementTitleValidator;
     Advertisement advertisement;
-    Random random;
 
     @BeforeAll
     void validatorInit() {
         advertisementTitleValidator = new AdvertisementTitleValidator();
-        random = new Random();
     }
 
     @BeforeEach
@@ -24,6 +22,7 @@ class AdvertisementTitleValidatorTest {
     }
 
     private String titleGenerator(int length) {
+        Random random= new Random();
         return random.ints(97, 123)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -31,7 +30,15 @@ class AdvertisementTitleValidatorTest {
     }
 
     @Test
-    void tooLongTitleIsInvalid() {
+    void testIfResponseIsPropertyWhenTitleIsCorrect() {
+        int length = 20;
+        String title = titleGenerator(length);
+        advertisement = advertisement.toBuilder().title(title).build();
+        Assertions.assertNull(advertisementTitleValidator.validate(advertisement));
+    }
+
+    @Test
+    void testIfResponseIsPropertyWhenTitleIsTooLong() {
         int length = 100;
         String title = titleGenerator(length);
         advertisement = advertisement.toBuilder().title(title).build();
@@ -39,7 +46,7 @@ class AdvertisementTitleValidatorTest {
     }
 
     @Test
-    void tooShortTitleIsInvalid() {
+    void testIfResponseIsPropertyWhenTitleIsTooShort() {
         int length = 10;
         String title = titleGenerator(length);
         advertisement = advertisement.toBuilder().title(title).build();
@@ -47,8 +54,8 @@ class AdvertisementTitleValidatorTest {
     }
 
     @Test
-    void titleWithIllegalCharactersIsInvalid() {
-        int length = random.nextInt(20) + 10;
+    void testIfResponseIsPropertyWhenTitleHasIllegalCharacter() {
+        int length = 20;
         String title = titleGenerator(length) + "/";
         advertisement = advertisement.toBuilder().title(title).build();
         Assertions.assertEquals(advertisementTitleValidator.validate(advertisement), "title contains illegal character");

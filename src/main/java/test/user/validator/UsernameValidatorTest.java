@@ -10,12 +10,10 @@ import java.util.Random;
 class UsernameValidatorTest {
     UsernameValidator UsernameValidator;
     User user;
-    Random random;
 
     @BeforeAll
     void validatorInit() {
         UsernameValidator = new UsernameValidator();
-        random=new Random();
     }
 
     @BeforeEach
@@ -25,6 +23,7 @@ class UsernameValidatorTest {
 
     private String usernameGenerator(int length)
     {
+        Random random=new Random();
         return random.ints(97, 123)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -32,16 +31,16 @@ class UsernameValidatorTest {
     }
 
     @Test
-    void validLastName()
+    void testIfResponseIsPropertyWhenUsernameIsCorrect()
     {
-        int length = random.nextInt(25) + 3;
+        int length = 10;
         String username = usernameGenerator(length);
         user=user.toBuilder().username(username).build();
         Assertions.assertNull(UsernameValidator.validate(user));
     }
 
     @Test
-    void tooShortUsernameIsInvalid()
+    void testIfResponseIsPropertyWhenUsernameIsTooShort()
     {
         int length = 2;
         String username = usernameGenerator(length);
@@ -50,7 +49,7 @@ class UsernameValidatorTest {
     }
 
     @Test
-    void tooLongUsernameIsInvalid()
+    void testIfResponseIsPropertyWhenUsernameIsTooLong()
     {
         int length = 40;
         String username = usernameGenerator(length);
@@ -59,7 +58,7 @@ class UsernameValidatorTest {
     }
 
     @Test
-    void usernameWithIllegalSignIsInvalid()
+    void testIfResponseIsPropertyWhenUsernameHasIllegalCharacter()
     {
         int length = 20;
         String username = usernameGenerator(length)+"/";

@@ -10,12 +10,10 @@ import java.util.Random;
 class UserEmailValidatorTest {
     UserEmailValidator userEmailValidator;
     User user;
-    Random random;
 
     @BeforeAll
     void validatorInit() {
         userEmailValidator = new UserEmailValidator();
-        random=new Random();
     }
 
     @BeforeEach
@@ -25,13 +23,14 @@ class UserEmailValidatorTest {
 
     private String emailPartGenerator(int length)
     {
+        Random random=new Random();
         return random.ints(97, 123)
                 .limit(length)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
     @Test
-    void validEmail()
+    void testIfResponseIsPropertyWhenEmailIsCorrect()
     {
         int length = 10;
         String email=emailPartGenerator(length)+"@"+emailPartGenerator(length);
@@ -40,7 +39,7 @@ class UserEmailValidatorTest {
     }
 
     @Test
-    void emailWithoutAtSignIsInvalid()
+    void testIfResponseIsPropertyWhenEmailDoNotHaveAtSign()
     {
         int length = 20;
         String email = emailPartGenerator(length);
@@ -48,7 +47,7 @@ class UserEmailValidatorTest {
         Assertions.assertEquals(userEmailValidator.validate(user),"incorrect email address");
     }
     @Test
-    void emailWithIncorrectSignIsInvalid()
+    void testIfResponseIsPropertyWhenEmailHasIllegalCharacter()
     {
         int length = 10;
         String email=emailPartGenerator(length)+"@"+emailPartGenerator(length)+"/";
