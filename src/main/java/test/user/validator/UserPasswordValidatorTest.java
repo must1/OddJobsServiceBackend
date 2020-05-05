@@ -53,7 +53,7 @@ class UserPasswordValidatorTest {
     @Test
     void testIfResponseIsPropertyWhenPasswordIsTooLong()
     {
-        int length = 40;
+        int length = 100;
         String password = passwordGenerator(length);
         user=user.toBuilder().password(password).build();
         Assertions.assertEquals(userPasswordValidator.validate(user),"password is too long");
