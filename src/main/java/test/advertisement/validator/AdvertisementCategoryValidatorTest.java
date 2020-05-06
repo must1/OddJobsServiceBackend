@@ -30,17 +30,12 @@ class AdvertisementCategoryValidatorTest {
     }
 
     @Test
-    void testIfResponseIsPropertyWhenCategoryIsIncorrect() {
+    void testIfExceptionIsThrownWhenAttemptingToAssignInvalidCategory() {
         advertisement = new Advertisement();
-        boolean exceptionCatched = false;
-        try {
-            AdvertisementCategory category = AdvertisementCategory.valueOf("NOTHING");
-        } catch (IllegalArgumentException expection) {
-            exceptionCatched = true;
-        } finally {
-            if (exceptionCatched) {
-                Assertions.assertTrue(true);
-            }
-        }
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            advertisement = advertisement.toBuilder()
+                    .advertisementCategory(AdvertisementCategory.valueOf("NOTHING"))
+                    .build();
+        });
     }
 }
