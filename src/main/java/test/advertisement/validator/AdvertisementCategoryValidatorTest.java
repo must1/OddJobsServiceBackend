@@ -23,12 +23,24 @@ class AdvertisementCategoryValidatorTest {
     @Test
     void testIfResponseIsPropertyWhenCategoryIsCorrect() {
         advertisement = new Advertisement();
-        for (AdvertisementCategory category : AdvertisementCategory.values()) {
-            advertisement = advertisement.toBuilder()
-                    .advertisementCategory(category)
-                    .build();
-            Assertions.assertNull(advertisementCategoryValidator.validate(advertisement));
+        advertisement = advertisement.toBuilder()
+                .advertisementCategory(AdvertisementCategory.valueOf("GARDENCARE"))
+                .build();
+        Assertions.assertNull(advertisementCategoryValidator.validate(advertisement));
+    }
+
+    @Test
+    void testIfResponseIsPropertyWhenCategoryIsIncorrect() {
+        advertisement = new Advertisement();
+        boolean exceptionCatched = false;
+        try {
+            AdvertisementCategory category = AdvertisementCategory.valueOf("NOTHING");
+        } catch (IllegalArgumentException expection) {
+            exceptionCatched = true;
+        } finally {
+            if (exceptionCatched) {
+                Assertions.assertTrue(true);
+            }
         }
     }
-    //TODO: Advertisement, which will be rejected by this validator
 }
