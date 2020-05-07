@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @Component
 @Slf4j
 public class InitialData {
-
     private final UserRepository userRepository;
     private final AdvertisementRepository advertisementRepository;
 
