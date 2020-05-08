@@ -1,3 +1,4 @@
+/*
 package odd.jobs.services.advertisement;
 
 import odd.jobs.entities.advertisement.Advertisement;
@@ -74,3 +75,4 @@ public class ShortAdvertisementService {
         return result.getResultList();
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package odd.jobs.controllers;
 
 import odd.jobs.entities.advertisement.Advertisement;
@@ -23,14 +24,8 @@ public class ShortAdvertisementController {
     }
 
     @GetMapping("/search/advertisements/{number}")
-    public List<ShortAdvertisement> getGeneralShortAdvertisements(@PathVariable("number") int number) {
-        return shortAdvertisementService.getGeneralShortAdvertisements(number);
-    }
-
-    @GetMapping("/search")
-    public List<Advertisement> getGeneralShortAdvertisements(
-            @RequestParam(value = "city", required = false) String city,
-            @RequestParam(value = "advertisementCategory", required = false) AdvertisementCategory advertisementCategory) {
-        return shortAdvertisementService.a(city, advertisementCategory);
+    public List<ShortAdvertisement> getAdvertisements(@PathVariable("number") int number) {
+        return shortAdvertisementService.getAdvertisements(number);
     }
 }
+*/
