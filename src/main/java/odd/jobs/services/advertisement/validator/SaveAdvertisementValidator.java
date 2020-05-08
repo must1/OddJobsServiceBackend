@@ -15,14 +15,14 @@ public class SaveAdvertisementValidator {
 
     final private List<IAdvertisementAttributesValidator> validators;
 
-    public SaveAdvertisementValidator(){
+    public SaveAdvertisementValidator() {
         validators = new ArrayList<>();
         validators.add(new AdvertisementCategoryValidator());
         validators.add(new AdvertisementDescriptionValidator());
         validators.add(new AdvertisementTitleValidator());
     }
 
-    public List<String> validate(Advertisement advertisement){
+    public List<String> validate(Advertisement advertisement) {
 
         return validators.stream()
                 .map(e -> e.validate(advertisement))

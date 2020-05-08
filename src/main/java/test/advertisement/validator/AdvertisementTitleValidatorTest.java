@@ -8,8 +8,9 @@ import java.util.Random;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AdvertisementTitleValidatorTest {
-    AdvertisementTitleValidator advertisementTitleValidator;
-    Advertisement advertisement;
+
+    private AdvertisementTitleValidator advertisementTitleValidator;
+    private Advertisement advertisement;
 
     @BeforeAll
     void validatorInit() {

@@ -40,7 +40,7 @@ public class UserCrudService implements UserDetailsService {
     public List<String> saveUser(User user) {
         SaveUserValidator validator = new SaveUserValidator();
         List<String> messages = validator.validate(user);
-        if(messages.isEmpty()){
+        if (messages.isEmpty()) {
             userRepository.save(user.toBuilder()
                     .password(passwordEncoder.encode(user.getPassword()))
                     .build());
@@ -50,7 +50,7 @@ public class UserCrudService implements UserDetailsService {
 
     public List<String> updateUser(User update, UserDetails requester) throws NotFoundException {
 
-        if((requester == null) || (!requester.getUsername().equals(update.getUsername()))){
+        if ((requester == null) || (!requester.getUsername().equals(update.getUsername()))) {
             return Collections.singletonList("you cannot update not yours data");
         }
         User userToUpdate = userRepository.findByUsername(update.getUsername())
@@ -60,26 +60,26 @@ public class UserCrudService implements UserDetailsService {
 
         SaveUserValidator validator = new SaveUserValidator();
         List<String> messages = validator.validate(userToSave);
-        if(messages.isEmpty()){
+        if (messages.isEmpty()) {
             userRepository.save(userToSave);
         }
         return messages;
     }
 
-    public String deleteUser(String username, UserDetails requester) throws NotFoundException {
+    public boolean blockUser(String username, UserDetails reporter) throws NotFoundException {
 
-        if(requester == null){
-            return ("false");
+        if (reporter == null) {
+            return false;
         }
-        User userToDelete = userRepository.findByUsername(username)
+        User userToBlock = userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        if(!requester.getUsername().equals(userToDelete.getUsername())){
-            return ("false");
+        if (!reporter.getUsername().equals(userToBlock.getUsername())) {
+            return false;
         }
-        userRepository.save(userToDelete.toBuilder()
+        userRepository.save(userToBlock.toBuilder()
                 .isBlocked(true)
                 .build());
-        return("true");
+        return true;
     }
 }

@@ -7,8 +7,9 @@ import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AdvertisementValidatorTest {
-    SaveAdvertisementValidator validator;
-    Advertisement advertisement;
+
+    private SaveAdvertisementValidator validator;
+    private Advertisement advertisement;
 
     @BeforeAll
     void validatorInit() {

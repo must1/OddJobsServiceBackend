@@ -42,9 +42,9 @@ public class UserCrudController {
         return userService.updateUser(user, requester);
     }
 
-    @DeleteMapping("/users/{username}")
-    public String deleteUser(@PathVariable String username,
-                           @AuthenticationPrincipal UserDetails requester) throws NotFoundException {
-        return userService.deleteUser(username, requester);
+    @PatchMapping("/users/{username}")
+    public boolean blockUser(@PathVariable String username,
+                             @AuthenticationPrincipal UserDetails reporter) throws NotFoundException {
+        return userService.blockUser(username, reporter);
     }
 }

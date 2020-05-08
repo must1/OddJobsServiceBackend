@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import odd.jobs.entities.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,6 +25,8 @@ public class Advertisement {
     private AdvertisementCategory advertisementCategory;
     private LocalDateTime dateTime;
     private boolean featured;
+    private String city;
+    private String createdBy;
     @OneToMany
     private List<AdvertisementPhoto> photos;
 }

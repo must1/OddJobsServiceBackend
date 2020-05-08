@@ -1,10 +1,13 @@
 package odd.jobs.controllers;
 
+import odd.jobs.entities.advertisement.Advertisement;
+import odd.jobs.entities.advertisement.AdvertisementCategory;
 import odd.jobs.entities.advertisement.ShortAdvertisement;
 import odd.jobs.services.advertisement.ShortAdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,5 +25,12 @@ public class ShortAdvertisementController {
     @GetMapping("/search/advertisements/{number}")
     public List<ShortAdvertisement> getGeneralShortAdvertisements(@PathVariable("number") int number) {
         return shortAdvertisementService.getGeneralShortAdvertisements(number);
+    }
+
+    @GetMapping("/search")
+    public List<Advertisement> getGeneralShortAdvertisements(
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "advertisementCategory", required = false) AdvertisementCategory advertisementCategory) {
+        return shortAdvertisementService.a(city, advertisementCategory);
     }
 }

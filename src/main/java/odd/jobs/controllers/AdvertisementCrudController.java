@@ -24,13 +24,13 @@ public class AdvertisementCrudController {
     }
 
     @GetMapping("/advertisements")
-    public List<Advertisement> getAllAdvertisements(){
+    public List<Advertisement> getAllAdvertisements() {
         return advertisementService.getAllAdvertisements();
     }
 
     @PostMapping("/advertisements")
-    public List<String> saveAdvertisement(@RequestBody Advertisement advertisement){
-        return advertisementService.saveAdvertisement(advertisement);
+    public List<String> saveAdvertisement(@RequestBody Advertisement advertisement, @RequestParam("id") long id) {
+        return advertisementService.saveAdvertisement(advertisement, id);
     }
 
 }

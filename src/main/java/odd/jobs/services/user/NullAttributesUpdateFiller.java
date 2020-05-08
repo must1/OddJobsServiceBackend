@@ -7,21 +7,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 
 
-public class NullAttributesUpdateFiller {
+class NullAttributesUpdateFiller {
 
     private final User userToUpdate;
     private final User update;
     private final PasswordEncoder passwordEncoder;
 
-    public NullAttributesUpdateFiller(User userToUpdate, User update){
+    NullAttributesUpdateFiller(User userToUpdate, User update) {
         this.userToUpdate = userToUpdate;
         this.update = update;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public User update(){
+    User update() {
         String password = null;
-        if(update.getPassword() != null){
+        if (update.getPassword() != null) {
             password = passwordEncoder.encode(update.getPassword());
         }
 

@@ -4,6 +4,7 @@ import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.AdvertisementCategory;
 
 public class AdvertisementCategoryValidator implements IAdvertisementAttributesValidator {
+
     @Override
     public String validate(Advertisement advertisement) {
         AdvertisementCategory attribute = advertisement.getAdvertisementCategory();

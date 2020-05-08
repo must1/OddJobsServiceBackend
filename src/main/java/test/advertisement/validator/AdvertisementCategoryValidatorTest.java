@@ -7,8 +7,9 @@ import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AdvertisementCategoryValidatorTest {
-    AdvertisementCategoryValidator advertisementCategoryValidator;
-    Advertisement advertisement;
+
+    private AdvertisementCategoryValidator advertisementCategoryValidator;
+    private Advertisement advertisement;
 
     @BeforeAll
     void validatorInit() {
@@ -32,10 +33,8 @@ class AdvertisementCategoryValidatorTest {
     @Test
     void testIfExceptionIsThrownWhenAttemptingToAssignInvalidCategory() {
         advertisement = new Advertisement();
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            advertisement = advertisement.toBuilder()
-                    .advertisementCategory(AdvertisementCategory.valueOf("NOTHING"))
-                    .build();
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> advertisement = advertisement.toBuilder()
+                .advertisementCategory(AdvertisementCategory.valueOf("NOTHING"))
+                .build());
     }
 }
