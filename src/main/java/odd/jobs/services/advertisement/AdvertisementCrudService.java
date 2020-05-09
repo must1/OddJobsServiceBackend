@@ -36,27 +36,25 @@ public class AdvertisementCrudService {
         this.userRepository = userRepository;
     }
 
-    public List<Advertisement> getAllAdvertisements() {
-        return new ArrayList<>(advertisementRepository.findAll());
-    }
-
     public Advertisement loadById(long Id) {
         Optional<Advertisement> advertisement = advertisementRepository.findById(Id);
         return advertisement.orElse(new Advertisement());
     }
 
     public List<String> saveAdvertisement(Advertisement advertisement, long id) {
-        User user = userRepository.findById(id).get(); // it has to exists so no need to check
-
+        Optional<User> user = userRepository.findById(id);
+        String username = user.map(User::getUsername).orElseThrow(IllegalArgumentException::new);
+        
         SaveAdvertisementValidator validator = new SaveAdvertisementValidator();
         List<String> messages = validator.validate(advertisement);
         if (messages.isEmpty()) {
             advertisementRepository.save(advertisement.toBuilder()
                     .dateTime(LocalDateTime.now())
-                    .createdBy(user.getUsername())
+                    .createdBy(username)
                     .build());
         }
         return messages;
+
     }
 
     public List<Advertisement> getAdvertisements(String city, AdvertisementCategory advertisementCategory) {
