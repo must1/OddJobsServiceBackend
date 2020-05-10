@@ -64,6 +64,11 @@ public class UserCrudService implements UserDetailsService {
 
         User userToSave = new NullAttributesUpdateFiller(userToUpdate, update).update();
 
+        if(requester.getRole().equals(Role.User)){
+            userToSave.toBuilder()
+                    .role(Role.User);
+        }
+
         SaveUserValidator validator = new SaveUserValidator();
         List<String> messages = validator.validate(userToSave);
         if (messages.isEmpty()) {
