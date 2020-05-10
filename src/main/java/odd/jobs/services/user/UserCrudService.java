@@ -3,6 +3,7 @@ package odd.jobs.services.user;
 import javassist.NotFoundException;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.UserRepository;
+import odd.jobs.services.user.availability.UserAvailabilityChecker;
 import odd.jobs.services.user.validator.SaveUserValidator;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,7 +40,9 @@ public class UserCrudService implements UserDetailsService {
 
     public List<String> saveUser(User user) {
         SaveUserValidator validator = new SaveUserValidator();
+        UserAvailabilityChecker checker = new UserAvailabilityChecker(userRepository);
         List<String> messages = validator.validate(user);
+        messages.addAll(checker.check(user));
         if (messages.isEmpty()) {
             userRepository.save(user.toBuilder()
                     .password(passwordEncoder.encode(user.getPassword()))
