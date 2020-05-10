@@ -59,15 +59,15 @@ public class UserCrudService implements UserDetailsService {
                 !(requester.getRole().equals(Role.Admin)))) {
             return Collections.singletonList("you cannot update not yours data");
         }
+        if(requester.getRole().equals(Role.User)){
+            update = update.toBuilder()
+                    .role(Role.User)
+                    .build();
+        }
         User userToUpdate = userRepository.findByUsername(update.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         User userToSave = new NullAttributesUpdateFiller(userToUpdate, update).update();
-
-        if(requester.getRole().equals(Role.User)){
-            userToSave.toBuilder()
-                    .role(Role.User);
-        }
 
         SaveUserValidator validator = new SaveUserValidator();
         List<String> messages = validator.validate(userToSave);
