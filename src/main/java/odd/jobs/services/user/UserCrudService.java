@@ -1,6 +1,7 @@
 package odd.jobs.services.user;
 
 import javassist.NotFoundException;
+import odd.jobs.controllers.Role;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.UserRepository;
 import odd.jobs.services.user.availability.UserAvailabilityChecker;
@@ -46,14 +47,16 @@ public class UserCrudService implements UserDetailsService {
         if (messages.isEmpty()) {
             userRepository.save(user.toBuilder()
                     .password(passwordEncoder.encode(user.getPassword()))
+                    .role(Role.User)
                     .build());
         }
         return messages;
     }
 
-    public List<String> updateUser(User update, UserDetails requester) throws NotFoundException {
+    public List<String> updateUser(User update, User requester) throws NotFoundException {
 
-        if ((requester == null) || (!requester.getUsername().equals(update.getUsername()))) {
+        if ((requester == null) || ((!requester.getUsername().equals(update.getUsername())) &&
+                !(requester.getRole().equals(Role.Admin)))) {
             return Collections.singletonList("you cannot update not yours data");
         }
         User userToUpdate = userRepository.findByUsername(update.getUsername())
@@ -69,7 +72,7 @@ public class UserCrudService implements UserDetailsService {
         return messages;
     }
 
-    public boolean blockUser(String username, UserDetails reporter) throws NotFoundException {
+    public boolean blockUser(String username, User reporter) throws NotFoundException {
 
         if (reporter == null) {
             return false;
