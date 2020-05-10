@@ -1,6 +1,5 @@
 package odd.jobs.controllers;
 
-import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.AdvertisementCategory;
 import odd.jobs.services.advertisement.AdvertisementCrudService;

@@ -1,6 +1,7 @@
 package odd.jobs.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import odd.jobs.entities.user.Role;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.AdvertisementCategory;
 import odd.jobs.entities.user.User;
@@ -36,6 +37,7 @@ public class InitialData {
                 .email("analnyPenetrator6969@gmail.com")
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
                 .phoneNumber("213702137")
+                .role(Role.USER)
                 .build());
 
         userRepository.save(User.builder()
@@ -45,6 +47,17 @@ public class InitialData {
                 .email("siterizer@gmail.com")
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
                 .phoneNumber("696969696")
+                .role(Role.USER)
+                .build());
+
+        userRepository.save(User.builder()
+                .firstName("admin")
+                .lastName("admin")
+                .username("admin")
+                .email("admin@gmail.com")
+                .password("$2a$10$UPRK/oWCc3e.yTb5TLvGG.CdJP8aGP6jNJH.LCtvQhgvigse83VZG")//admin
+                .phoneNumber("111111111")
+                .role(Role.ADMIN)
                 .build());
     }
 
