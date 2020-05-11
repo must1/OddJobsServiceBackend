@@ -38,13 +38,13 @@ public class UserCrudController {
 
     @PatchMapping("/users")
     public List<String> updateUser(@Valid @RequestBody User user,
-                           @AuthenticationPrincipal UserDetails requester) throws NotFoundException {
+                           @AuthenticationPrincipal User requester) throws NotFoundException {
         return userService.updateUser(user, requester);
     }
 
     @PatchMapping("/users/{username}")
     public boolean blockUser(@PathVariable String username,
-                             @AuthenticationPrincipal UserDetails reporter) throws NotFoundException {
+                             @AuthenticationPrincipal User reporter) throws NotFoundException {
         return userService.blockUser(username, reporter);
     }
 }

@@ -36,6 +36,8 @@ class NullAttributesUpdateFiller {
                         .orElse(userToUpdate.getEmail()))
                 .phoneNumber(Optional.ofNullable(update.getPhoneNumber())
                         .orElse(userToUpdate.getPhoneNumber()))
+                .role(Optional.ofNullable(update.getRole())
+                        .orElse(userToUpdate.getRole()))
                 .build();
     }
 }

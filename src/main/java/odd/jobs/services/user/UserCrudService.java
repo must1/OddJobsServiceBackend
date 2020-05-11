@@ -1,8 +1,10 @@
 package odd.jobs.services.user;
 
 import javassist.NotFoundException;
+import odd.jobs.entities.user.Role;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.UserRepository;
+import odd.jobs.services.user.availability.UserAvailabilityChecker;
 import odd.jobs.services.user.validator.SaveUserValidator;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,19 +41,28 @@ public class UserCrudService implements UserDetailsService {
 
     public List<String> saveUser(User user) {
         SaveUserValidator validator = new SaveUserValidator();
+        UserAvailabilityChecker checker = new UserAvailabilityChecker(userRepository);
         List<String> messages = validator.validate(user);
+        messages.addAll(checker.check(user));
         if (messages.isEmpty()) {
             userRepository.save(user.toBuilder()
                     .password(passwordEncoder.encode(user.getPassword()))
+                    .role(Role.USER)
                     .build());
         }
         return messages;
     }
 
-    public List<String> updateUser(User update, UserDetails requester) throws NotFoundException {
+    public List<String> updateUser(User update, User requester) throws NotFoundException {
 
-        if ((requester == null) || (!requester.getUsername().equals(update.getUsername()))) {
+        if ((requester == null) || ((!requester.getUsername().equals(update.getUsername())) &&
+                !(requester.getRole().equals(Role.ADMIN)))) {
             return Collections.singletonList("you cannot update not yours data");
+        }
+        if(requester.getRole().equals(Role.USER)){
+            update = update.toBuilder()
+                    .role(Role.USER)
+                    .build();
         }
         User userToUpdate = userRepository.findByUsername(update.getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found"));
@@ -66,7 +77,7 @@ public class UserCrudService implements UserDetailsService {
         return messages;
     }
 
-    public boolean blockUser(String username, UserDetails reporter) throws NotFoundException {
+    public boolean blockUser(String username, User reporter) throws NotFoundException {
 
         if (reporter == null) {
             return false;
