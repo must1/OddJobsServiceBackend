@@ -42,11 +42,17 @@ public class AdvertisementCrudService {
     }
 
     public List<String> saveAdvertisement(Advertisement advertisement, long id) {
+        List<String> messages = new ArrayList<>();
         Optional<User> user = userRepository.findById(id);
         String username = user.map(User::getUsername).orElseThrow(IllegalArgumentException::new);
-        
+
+        if (user.get().isBlocked()) {
+            messages.add("User is blocked!");
+            return messages;
+        }
+
         SaveAdvertisementValidator validator = new SaveAdvertisementValidator();
-        List<String> messages = validator.validate(advertisement);
+        messages = validator.validate(advertisement);
         if (messages.isEmpty()) {
             advertisementRepository.save(advertisement.toBuilder()
                     .dateTime(LocalDateTime.now())

@@ -27,8 +27,6 @@ public class User implements UserDetails {
     private String phoneNumber;
     @Column(columnDefinition = "boolean default false")
     private boolean isBlocked;
-    @OneToMany
-    private List<UserProfilePhoto> userProfilePhotos;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
