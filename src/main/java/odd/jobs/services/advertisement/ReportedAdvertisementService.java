@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ReportedAdvertisementOperationsService {
+public class ReportedAdvertisementService {
 
     private final ReportedAdvertisementRepository reportedAdvertisementRepository;
     private final UserRepository userRepository;
@@ -22,7 +22,7 @@ public class ReportedAdvertisementOperationsService {
 
 
     @Autowired
-    public ReportedAdvertisementOperationsService(ReportedAdvertisementRepository reportedAdvertisementRepository, UserRepository userRepository, AdvertisementRepository advertisementRepository) {
+    public ReportedAdvertisementService(ReportedAdvertisementRepository reportedAdvertisementRepository, UserRepository userRepository, AdvertisementRepository advertisementRepository) {
         this.reportedAdvertisementRepository = reportedAdvertisementRepository;
         this.userRepository = userRepository;
         this.advertisementRepository = advertisementRepository;

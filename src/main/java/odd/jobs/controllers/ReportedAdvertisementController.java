@@ -2,19 +2,19 @@ package odd.jobs.controllers;
 
 import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.ReportedAdvertisement;
-import odd.jobs.services.advertisement.ReportedAdvertisementOperationsService;
+import odd.jobs.services.advertisement.ReportedAdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-public class ReportedAdvertisementOperationsController {
+public class ReportedAdvertisementController {
 
-    private final ReportedAdvertisementOperationsService reportedAdvertisementService;
+    private final ReportedAdvertisementService reportedAdvertisementService;
 
     @Autowired
-    public ReportedAdvertisementOperationsController(ReportedAdvertisementOperationsService reportedAdvertisementService) {
+    public ReportedAdvertisementController(ReportedAdvertisementService reportedAdvertisementService) {
         this.reportedAdvertisementService = reportedAdvertisementService;
     }
 
