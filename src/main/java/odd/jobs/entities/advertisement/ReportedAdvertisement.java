@@ -1,6 +1,9 @@
 package odd.jobs.entities.advertisement;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import odd.jobs.entities.user.User;
 
 import javax.persistence.Entity;
@@ -10,6 +13,9 @@ import javax.persistence.ManyToOne;
 
 @Getter
 @Entity
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReportedAdvertisement {
 
     @Id
