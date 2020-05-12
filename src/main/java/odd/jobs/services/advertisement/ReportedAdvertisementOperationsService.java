@@ -54,12 +54,12 @@ public class ReportedAdvertisementOperationsService {
     }
 
     public void report(long userId, long advertisementId, String description) throws NotFoundException {
-        ReportedAdvertisement reportedAdvertisement=new ReportedAdvertisement();
-        Advertisement advertisement=advertisementRepository.findById(advertisementId)
-                .orElseThrow(()->new NotFoundException("Advertisement with id "+advertisementId+" not found"));
-        User user=userRepository.findById(userId)
-                .orElseThrow(()->new NotFoundException("User with id "+userId+" not found"));
-        reportedAdvertisement=reportedAdvertisement.toBuilder()
+        ReportedAdvertisement reportedAdvertisement = new ReportedAdvertisement();
+        Advertisement advertisement = advertisementRepository.findById(advertisementId)
+                .orElseThrow(() -> new NotFoundException("Advertisement with id " + advertisementId + " not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
+        reportedAdvertisement = reportedAdvertisement.toBuilder()
                 .advertisement(advertisement)
                 .user(user)
                 .description(description).build();

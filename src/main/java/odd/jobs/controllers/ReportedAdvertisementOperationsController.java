@@ -30,9 +30,9 @@ public class ReportedAdvertisementOperationsController {
 
     @PostMapping("/reported")
     public void report(
-            @RequestParam(value="userId") long userId,
-            @RequestParam(value="advertisementId") long advertisementId,
-            @RequestParam(value="description") String description) throws NotFoundException {
+            @RequestParam(value = "userId") long userId,
+            @RequestParam(value = "advertisementId") long advertisementId,
+            @RequestParam(value = "description") String description) throws NotFoundException {
         reportedAdvertisementService.report(userId, advertisementId, description);
     }
 
