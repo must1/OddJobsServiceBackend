@@ -2,28 +2,16 @@ package odd.jobs.services.advertisement;
 
 import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
 import odd.jobs.entities.advertisement.ReportedAdvertisement;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.repositories.ReportedAdvertisementRepository;
 import odd.jobs.repositories.UserRepository;
-import odd.jobs.services.advertisement.validator.SaveAdvertisementValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReportedAdvertisementOperationsService {
