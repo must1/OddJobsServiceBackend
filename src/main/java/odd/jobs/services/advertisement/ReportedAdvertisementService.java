@@ -3,6 +3,7 @@ package odd.jobs.services.advertisement;
 import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.ReportedAdvertisement;
+import odd.jobs.entities.user.Role;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.repositories.ReportedAdvertisementRepository;
@@ -62,6 +63,9 @@ public class ReportedAdvertisementService {
         if (requester == null || requester.isBlocked()) {
             return "you need to log in to create advertisement";
         }
+        if (requester.getRole() != Role.ADMIN){
+            return "you need to become an admin";
+        }
         ReportedAdvertisement reportedAdvertisement = reportedAdvertisementRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Reported advertisement not found"));
         Advertisement advertisement = reportedAdvertisement.getAdvertisement();
@@ -73,6 +77,9 @@ public class ReportedAdvertisementService {
     public String rejectReport(long id, User requester) throws NotFoundException {
         if (requester == null || requester.isBlocked()) {
             return "you need to log in to create advertisement";
+        }
+        if (requester.getRole() != Role.ADMIN){
+            return "you need to become an admin";
         }
         ReportedAdvertisement reportedAdvertisement = reportedAdvertisementRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Reported advertisement not found"));
