@@ -2,6 +2,7 @@ package odd.jobs.services.advertisement;
 
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.user.Role;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.repositories.UserRepository;
@@ -18,6 +19,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,15 +27,13 @@ import java.util.Optional;
 public class AdvertisementCrudService {
 
     private final AdvertisementRepository advertisementRepository;
-    private final UserRepository userRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    public AdvertisementCrudService(AdvertisementRepository advertisementRepository, UserRepository userRepository) {
+    public AdvertisementCrudService(AdvertisementRepository advertisementRepository) {
         this.advertisementRepository = advertisementRepository;
-        this.userRepository = userRepository;
     }
 
     public Advertisement loadById(long Id) {
@@ -41,22 +41,16 @@ public class AdvertisementCrudService {
         return advertisement.orElse(new Advertisement());
     }
 
-    public List<String> saveAdvertisement(Advertisement advertisement, long id) {
-        List<String> messages = new ArrayList<>();
-        Optional<User> user = userRepository.findById(id);
-        String username = user.map(User::getUsername).orElseThrow(IllegalArgumentException::new);
-
-        if (user.get().isBlocked()) {
-            messages.add("User is blocked!");
-            return messages;
+    public List<String> saveAdvertisement(Advertisement advertisement, User requester) {
+        if (requester == null || requester.isBlocked()) {
+            return Collections.singletonList("you need to log in to create advertisement");
         }
-
         SaveAdvertisementValidator validator = new SaveAdvertisementValidator();
-        messages = validator.validate(advertisement);
+        List<String> messages = validator.validate(advertisement);
         if (messages.isEmpty()) {
             advertisementRepository.save(advertisement.toBuilder()
                     .dateTime(LocalDateTime.now())
-                    .createdBy(username)
+                    .createdBy(requester.getUsername())
                     .build());
         }
         return messages;

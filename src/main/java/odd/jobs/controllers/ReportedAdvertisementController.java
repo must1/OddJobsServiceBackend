@@ -2,8 +2,10 @@ package odd.jobs.controllers;
 
 import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.ReportedAdvertisement;
+import odd.jobs.entities.user.User;
 import odd.jobs.services.advertisement.ReportedAdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,21 +31,23 @@ public class ReportedAdvertisementController {
     }
 
     @PostMapping("/reported")
-    public void report(
-            @RequestParam(value = "userId") long userId,
+    public List<String> report(
+            @AuthenticationPrincipal User requester,
             @RequestParam(value = "advertisementId") long advertisementId,
             @RequestParam(value = "description") String description) throws NotFoundException {
-        reportedAdvertisementService.report(userId, advertisementId, description);
+        return reportedAdvertisementService.report(requester, advertisementId, description);
     }
 
     @PatchMapping("/reported/{id}")
-    public void acceptReport(@PathVariable long id) throws NotFoundException {
-        reportedAdvertisementService.acceptReport(id);
+    public String acceptReport(@PathVariable long id,
+                               @AuthenticationPrincipal User requester) throws NotFoundException {
+        return reportedAdvertisementService.acceptReport(id, requester);
     }
 
     @DeleteMapping("/reported/{id}")
-    public void rejectReport(@PathVariable long id) throws NotFoundException {
-        reportedAdvertisementService.rejectReport(id);
+    public String rejectReport(@PathVariable long id,
+                               @AuthenticationPrincipal User requester) throws NotFoundException {
+        return reportedAdvertisementService.rejectReport(id, requester);
     }
 
 }

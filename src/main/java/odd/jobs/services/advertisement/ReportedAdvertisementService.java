@@ -11,20 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class ReportedAdvertisementService {
 
     private final ReportedAdvertisementRepository reportedAdvertisementRepository;
-    private final UserRepository userRepository;
     private final AdvertisementRepository advertisementRepository;
 
 
     @Autowired
-    public ReportedAdvertisementService(ReportedAdvertisementRepository reportedAdvertisementRepository, UserRepository userRepository, AdvertisementRepository advertisementRepository) {
+    public ReportedAdvertisementService(ReportedAdvertisementRepository reportedAdvertisementRepository, AdvertisementRepository advertisementRepository) {
         this.reportedAdvertisementRepository = reportedAdvertisementRepository;
-        this.userRepository = userRepository;
         this.advertisementRepository = advertisementRepository;
     }
 
@@ -35,36 +34,49 @@ public class ReportedAdvertisementService {
     }
 
     public ReportedAdvertisement getReportedAdvertisement(Long id) throws NotFoundException {
-        List<ReportedAdvertisement> temp = new ArrayList<>();
-        ReportedAdvertisement reportedAdvertisement = reportedAdvertisementRepository.findById(id)
+        return reportedAdvertisementRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Reported advertisement not found"));
-        return reportedAdvertisement;
     }
 
-    public void report(long userId, long advertisementId, String description) throws NotFoundException {
+    public List<String> report(User requester, long advertisementId, String description) throws NotFoundException {
+        if (requester == null || requester.isBlocked()) {
+            return Collections.singletonList("you need to log in to create advertisement");
+        }
+        if (description.length() > 255) {
+            return Collections.singletonList("description is too long");
+        } else if (!description.matches("^\\s*[\\da-zA-Z][\\da-zA-Z\\s]*$")) {
+            return Collections.singletonList("description contains illegal character");
+        }
         ReportedAdvertisement reportedAdvertisement = new ReportedAdvertisement();
         Advertisement advertisement = advertisementRepository.findById(advertisementId)
                 .orElseThrow(() -> new NotFoundException("Advertisement with id " + advertisementId + " not found"));
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
         reportedAdvertisement = reportedAdvertisement.toBuilder()
                 .advertisement(advertisement)
-                .user(user)
+                .user(requester)
                 .description(description).build();
         reportedAdvertisementRepository.save(reportedAdvertisement);
+        return Collections.emptyList();
     }
 
-    public void acceptReport(long id) throws NotFoundException {
+    public String acceptReport(long id, User requester) throws NotFoundException {
+        if (requester == null || requester.isBlocked()) {
+            return "you need to log in to create advertisement";
+        }
         ReportedAdvertisement reportedAdvertisement = reportedAdvertisementRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Reported advertisement not found"));
         Advertisement advertisement = reportedAdvertisement.getAdvertisement();
         reportedAdvertisementRepository.delete(reportedAdvertisement);
         advertisementRepository.delete(advertisement);
+        return "";
     }
 
-    public void rejectReport(long id) throws NotFoundException {
+    public String rejectReport(long id, User requester) throws NotFoundException {
+        if (requester == null || requester.isBlocked()) {
+            return "you need to log in to create advertisement";
+        }
         ReportedAdvertisement reportedAdvertisement = reportedAdvertisementRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Reported advertisement not found"));
         reportedAdvertisementRepository.delete(reportedAdvertisement);
+        return "";
     }
 }
