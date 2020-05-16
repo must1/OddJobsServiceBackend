@@ -2,8 +2,10 @@ package odd.jobs.controllers;
 
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.user.User;
 import odd.jobs.services.advertisement.AdvertisementCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,9 @@ public class AdvertisementCrudController {
     }
 
     @PostMapping("/advertisements")
-    public List<String> saveAdvertisement(@RequestBody Advertisement advertisement, @RequestParam("id") long id) {
-        return advertisementService.saveAdvertisement(advertisement, id);
+    public List<String> saveAdvertisement(@RequestBody Advertisement advertisement,
+                                          @AuthenticationPrincipal User requester){
+        return advertisementService.saveAdvertisement(advertisement, requester);
     }
 
     @GetMapping("/advertisements")
