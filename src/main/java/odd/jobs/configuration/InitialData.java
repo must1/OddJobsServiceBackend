@@ -78,6 +78,7 @@ public class InitialData {
                 .title("TiTitle 2tle 1")
                 .contractType(ContractType.MANDATORY_CONTRACT)
                 .workingHours(WorkingHours.FULL_TIME)
+                .reward(40)
                 .build());
 
         advertisementRepository.save(Advertisement.builder()
@@ -92,6 +93,7 @@ public class InitialData {
                 .contractType(ContractType.EMPLOYMENT_CONTRACT)
                 .title("TTitle 2Title 2Title 2itle 2")
                 .workingHours(WorkingHours.HALF_TIME)
+                .reward(100)
                 .build());
     }
 }

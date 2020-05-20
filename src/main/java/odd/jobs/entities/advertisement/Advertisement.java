@@ -35,6 +35,7 @@ public class Advertisement {
     private String createdBy;
     private WorkingHours workingHours;
     private ContractType contractType;
+    private Integer reward;
     @OneToMany
     private List<AdvertisementPhoto> photos;
 }
