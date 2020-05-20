@@ -2,6 +2,9 @@ package odd.jobs.services.advertisement;
 
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.City;
+import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
+import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
 import odd.jobs.entities.user.Role;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
@@ -57,7 +60,7 @@ public class AdvertisementCrudService {
 
     }
 
-    public List<Advertisement> getAdvertisements(String city, AdvertisementCategory advertisementCategory) {
+    public List<Advertisement> getAdvertisements(City city, AdvertisementCategory advertisementCategory, ContractType contractType, WorkingHours workingHours) {
         List<Predicate> predicates = new ArrayList<>();
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Advertisement> query = cb.createQuery(Advertisement.class);
@@ -69,10 +72,17 @@ public class AdvertisementCrudService {
         if (advertisementCategory != null) {
             predicates.add(cb.equal(table.get("advertisementCategory"), advertisementCategory));
         }
+        if (contractType != null) {
+            predicates.add(cb.equal(table.get("contractType"), contractType));
+        }
+        if (workingHours != null) {
+            predicates.add(cb.equal(table.get("workingHours"), workingHours));
+        }
 
         query.where(cb.and(predicates.toArray(new Predicate[0])));
         final TypedQuery<Advertisement> result = entityManager.createQuery(query);
 
         return result.getResultList();
     }
+
 }

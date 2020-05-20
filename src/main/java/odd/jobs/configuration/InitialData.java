@@ -1,6 +1,9 @@
 package odd.jobs.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import odd.jobs.entities.advertisement.advertisementEnum.City;
+import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
+import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
 import odd.jobs.entities.user.Role;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.AdvertisementCategory;
@@ -71,8 +74,10 @@ public class InitialData {
                 .description("LAAAAAAAAAAAAAAAAAAA")
                 .featured(false)
                 .photos(null)
-                .city("WARSZAWA")
+                .city(City.WARSZAWA)
                 .title("TiTitle 2tle 1")
+                .contractType(ContractType.MANDATORY_CONTRACT)
+                .workingHours(WorkingHours.FULL_TIME)
                 .build());
 
         advertisementRepository.save(Advertisement.builder()
@@ -83,8 +88,10 @@ public class InitialData {
                         "AAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAALAAAAAAAAAAAAAAAAAAA")
                 .featured(false)
                 .photos(null)
-                .city("LALA")
+                .city(City.KRAKOW)
+                .contractType(ContractType.EMPLOYMENT_CONTRACT)
                 .title("TTitle 2Title 2Title 2itle 2")
+                .workingHours(WorkingHours.HALF_TIME)
                 .build());
     }
 }

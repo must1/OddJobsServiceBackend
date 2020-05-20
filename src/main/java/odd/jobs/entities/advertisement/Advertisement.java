@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import odd.jobs.entities.advertisement.advertisementEnum.City;
+import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
+import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,8 +30,10 @@ public class Advertisement {
     private AdvertisementCategory advertisementCategory;
     private LocalDateTime dateTime;
     private boolean featured;
-    private String city;
+    private City city;
     private String createdBy;
+    private WorkingHours workingHours;
+    private ContractType contractType;
     @OneToMany
     private List<AdvertisementPhoto> photos;
 }
