@@ -6,7 +6,7 @@ import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
 import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
 import odd.jobs.entities.user.Role;
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.repositories.UserRepository;

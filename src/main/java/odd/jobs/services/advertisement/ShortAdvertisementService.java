@@ -2,7 +2,7 @@
 package odd.jobs.services.advertisement;
 
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.advertisement.ShortAdvertisement;
 import odd.jobs.repositories.AdvertisementRepository;
 import org.apache.commons.lang3.StringUtils;

@@ -1,7 +1,7 @@
 package test.advertisement.validator;
 
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.services.advertisement.validator.SaveAdvertisementValidator;
 import org.junit.jupiter.api.*;
 

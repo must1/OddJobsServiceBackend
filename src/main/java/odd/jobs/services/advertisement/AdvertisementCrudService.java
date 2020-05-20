@@ -1,14 +1,12 @@
 package odd.jobs.services.advertisement;
 
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.advertisement.advertisementEnum.City;
 import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
 import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
-import odd.jobs.entities.user.Role;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
-import odd.jobs.repositories.UserRepository;
 import odd.jobs.services.advertisement.validator.SaveAdvertisementValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

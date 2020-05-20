@@ -2,7 +2,7 @@
 package odd.jobs.controllers;
 
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.advertisement.ShortAdvertisement;
 import odd.jobs.services.advertisement.ShortAdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package odd.jobs.controllers;
 
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.advertisement.advertisementEnum.City;
 import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
 import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;

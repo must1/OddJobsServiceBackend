@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.advertisement.advertisementEnum.City;
 import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
 import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
