@@ -1,5 +1,6 @@
 package odd.jobs.services.advertisement;
 
+import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.AdvertisementCategory;
 import odd.jobs.entities.user.User;
@@ -7,7 +8,9 @@ import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.repositories.UserRepository;
 import odd.jobs.services.advertisement.validator.SaveAdvertisementValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,7 +47,7 @@ public class AdvertisementCrudService {
     public List<String> saveAdvertisement(Advertisement advertisement, long id) {
         Optional<User> user = userRepository.findById(id);
         String username = user.map(User::getUsername).orElseThrow(IllegalArgumentException::new);
-        
+
         SaveAdvertisementValidator validator = new SaveAdvertisementValidator();
         List<String> messages = validator.validate(advertisement);
         if (messages.isEmpty()) {
@@ -74,5 +77,23 @@ public class AdvertisementCrudService {
         final TypedQuery<Advertisement> result = entityManager.createQuery(query);
 
         return result.getResultList();
+    }
+
+    public void feature(long id) throws NotFoundException {
+        Advertisement advertisement = advertisementRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Advertisement not found"));
+        advertisement = advertisement.toBuilder()
+                .featured(true)
+                .build();
+        advertisementRepository.save(advertisement);
+    }
+
+    public void unfeature(long id) throws NotFoundException {
+        Advertisement advertisement = advertisementRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Advertisement not found"));
+        advertisement = advertisement.toBuilder()
+                .featured(false)
+                .build();
+        advertisementRepository.save(advertisement);
     }
 }

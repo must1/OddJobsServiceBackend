@@ -36,4 +36,14 @@ public class AdvertisementCrudController {
         return advertisementService.getAdvertisements(city, advertisementCategory);
     }
 
+    @PutMapping("/advertisements/{id}")
+    public void feature(@PathVariable long id) throws NotFoundException {
+        advertisementService.feature(id);
+    }
+
+    @PatchMapping("/advertisements/{id}")
+    public void unfeature(@PathVariable long id) throws NotFoundException {
+        advertisementService.unfeature(id);
+    }
+
 }
