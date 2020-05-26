@@ -9,8 +9,13 @@ import odd.jobs.entities.user.User;
 import odd.jobs.services.advertisement.AdvertisementCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -22,6 +27,19 @@ public class AdvertisementCrudController {
     public AdvertisementCrudController(AdvertisementCrudService advertisementService) {
         this.advertisementService = advertisementService;
     }
+
+    /*@GetMapping("/logout")
+    public boolean myLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        // Just for testing, the param is available:
+        System.out.println(request.getParameter("exitMsg"));
+        // Manual logoff
+        CookieClearingLogoutHandler cookieClearingLogoutHandler = new CookieClearingLogoutHandler(AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY);
+        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
+        cookieClearingLogoutHandler.logout(request, response, null);
+        securityContextLogoutHandler.logout(request, response, null);
+        // My custom Logout JSP. No auto-redirects to Login
+        return true;
+    }*/
 
     @GetMapping("/advertisements/{id}")
     public Advertisement getAdvertisementById(@PathVariable long id) {
@@ -39,8 +57,9 @@ public class AdvertisementCrudController {
             @RequestParam(value = "city", required = false) City city,
             @RequestParam(value = "advertisementCategory", required = false) AdvertisementCategory advertisementCategory,
             @RequestParam(value = "contractType", required = false) ContractType contractType,
-            @RequestParam(value = "workingHours", required = false)WorkingHours workingHours) {
-        return advertisementService.getAdvertisements(city, advertisementCategory, contractType, workingHours);
+            @RequestParam(value = "workingHours", required = false) WorkingHours workingHours,
+            @RequestParam(value = "createdBy", required = false) String createdBy) {
+        return advertisementService.getAdvertisements(city, advertisementCategory, contractType, workingHours, createdBy);
     }
 
 }

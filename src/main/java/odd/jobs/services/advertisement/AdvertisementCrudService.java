@@ -43,8 +43,11 @@ public class AdvertisementCrudService {
     }
 
     public List<String> saveAdvertisement(Advertisement advertisement, User requester) {
-        if (requester == null || requester.isBlocked()) {
+        if (requester == null) {
             return Collections.singletonList("you need to log in to create advertisement");
+        }
+        if (requester.isBlocked()) {
+            return Collections.singletonList("you are blocked");
         }
         SaveAdvertisementValidator validator = new SaveAdvertisementValidator();
         List<String> messages = validator.validate(advertisement);
@@ -58,7 +61,7 @@ public class AdvertisementCrudService {
 
     }
 
-    public List<Advertisement> getAdvertisements(City city, AdvertisementCategory advertisementCategory, ContractType contractType, WorkingHours workingHours) {
+    public List<Advertisement> getAdvertisements(City city, AdvertisementCategory advertisementCategory, ContractType contractType, WorkingHours workingHours, String createdBy) {
         List<Predicate> predicates = new ArrayList<>();
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Advertisement> query = cb.createQuery(Advertisement.class);
@@ -75,6 +78,9 @@ public class AdvertisementCrudService {
         }
         if (workingHours != null) {
             predicates.add(cb.equal(table.get("workingHours"), workingHours));
+        }
+        if (createdBy != null) {
+            predicates.add(cb.equal(table.get("createdBy"), createdBy));
         }
 
         query.where(cb.and(predicates.toArray(new Predicate[0])));

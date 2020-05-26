@@ -78,6 +78,7 @@ public class InitialData {
                 .title("TiTitle 2tle 1")
                 .contractType(ContractType.MANDATORY_CONTRACT)
                 .workingHours(WorkingHours.FULL_TIME)
+                .createdBy("Papa")
                 .reward(40)
                 .build());
 
@@ -94,6 +95,7 @@ public class InitialData {
                 .title("TTitle 2Title 2Title 2itle 2")
                 .workingHours(WorkingHours.HALF_TIME)
                 .reward(100)
+                .createdBy("Nana")
                 .build());
     }
 }

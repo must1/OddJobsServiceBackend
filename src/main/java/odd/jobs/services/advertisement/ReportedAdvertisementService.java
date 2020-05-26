@@ -40,8 +40,11 @@ public class ReportedAdvertisementService {
     }
 
     public List<String> report(User requester, long advertisementId, String description) throws NotFoundException {
-        if (requester == null || requester.isBlocked()) {
+        if (requester == null) {
             return Collections.singletonList("you need to log in to create advertisement");
+        }
+        if (requester.isBlocked()) {
+            return Collections.singletonList("you are blocked");
         }
         if (description.length() > 255) {
             return Collections.singletonList("description is too long");
@@ -63,7 +66,7 @@ public class ReportedAdvertisementService {
         if (requester == null || requester.isBlocked()) {
             return "you need to log in to create advertisement";
         }
-        if (requester.getRole() != Role.ADMIN){
+        if (requester.getRole() != Role.ADMIN) {
             return "you need to become an admin";
         }
         ReportedAdvertisement reportedAdvertisement = reportedAdvertisementRepository.findById(id)
@@ -78,7 +81,7 @@ public class ReportedAdvertisementService {
         if (requester == null || requester.isBlocked()) {
             return "you need to log in to create advertisement";
         }
-        if (requester.getRole() != Role.ADMIN){
+        if (requester.getRole() != Role.ADMIN) {
             return "you need to become an admin";
         }
         ReportedAdvertisement reportedAdvertisement = reportedAdvertisementRepository.findById(id)
