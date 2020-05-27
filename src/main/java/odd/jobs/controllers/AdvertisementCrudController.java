@@ -1,5 +1,6 @@
 package odd.jobs.controllers;
 
+import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.advertisement.advertisementEnum.City;
