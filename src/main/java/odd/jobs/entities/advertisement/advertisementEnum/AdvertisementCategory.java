@@ -1,4 +1,4 @@
-package odd.jobs.entities.advertisement;
+package odd.jobs.entities.advertisement.advertisementEnum;
 
 public enum AdvertisementCategory {
 

@@ -1,8 +1,12 @@
 package odd.jobs.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import odd.jobs.entities.advertisement.advertisementEnum.City;
+import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
+import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
+import odd.jobs.entities.user.Role;
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.repositories.UserRepository;
@@ -36,6 +40,7 @@ public class InitialData {
                 .email("analnyPenetrator6969@gmail.com")
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
                 .phoneNumber("213702137")
+                .role(Role.USER)
                 .build());
 
         userRepository.save(User.builder()
@@ -45,6 +50,17 @@ public class InitialData {
                 .email("siterizer@gmail.com")
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
                 .phoneNumber("696969696")
+                .role(Role.USER)
+                .build());
+
+        userRepository.save(User.builder()
+                .firstName("admin")
+                .lastName("admin")
+                .username("admin")
+                .email("admin@gmail.com")
+                .password("$2a$10$UPRK/oWCc3e.yTb5TLvGG.CdJP8aGP6jNJH.LCtvQhgvigse83VZG")//admin
+                .phoneNumber("111111111")
+                .role(Role.ADMIN)
                 .build());
     }
 
@@ -58,8 +74,12 @@ public class InitialData {
                 .description("LAAAAAAAAAAAAAAAAAAA")
                 .featured(false)
                 .photos(null)
-                .city("WARSZAWA")
+                .city(City.WARSZAWA)
                 .title("TiTitle 2tle 1")
+                .contractType(ContractType.MANDATORY_CONTRACT)
+                .workingHours(WorkingHours.FULL_TIME)
+                .createdBy("Papa")
+                .reward(40)
                 .build());
 
         advertisementRepository.save(Advertisement.builder()
@@ -70,8 +90,12 @@ public class InitialData {
                         "AAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAALAAAAAAAAAAAAAAAAAAA")
                 .featured(false)
                 .photos(null)
-                .city("LALA")
+                .city(City.KRAKOW)
+                .contractType(ContractType.EMPLOYMENT_CONTRACT)
                 .title("TTitle 2Title 2Title 2itle 2")
+                .workingHours(WorkingHours.HALF_TIME)
+                .reward(100)
+                .createdBy("Nana")
                 .build());
     }
 }

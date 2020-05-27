@@ -1,7 +1,7 @@
 package odd.jobs.services.advertisement.validator.components;
 
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 
 public class AdvertisementCategoryValidator implements IAdvertisementAttributesValidator {
 

@@ -1,12 +1,21 @@
 package odd.jobs.controllers;
 
-import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.entities.advertisement.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
+import odd.jobs.entities.advertisement.advertisementEnum.City;
+import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
+import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
+import odd.jobs.entities.user.User;
 import odd.jobs.services.advertisement.AdvertisementCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -19,21 +28,38 @@ public class AdvertisementCrudController {
         this.advertisementService = advertisementService;
     }
 
+    /*@GetMapping("/logout")
+    public boolean myLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        // Just for testing, the param is available:
+        System.out.println(request.getParameter("exitMsg"));
+        // Manual logoff
+        CookieClearingLogoutHandler cookieClearingLogoutHandler = new CookieClearingLogoutHandler(AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY);
+        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
+        cookieClearingLogoutHandler.logout(request, response, null);
+        securityContextLogoutHandler.logout(request, response, null);
+        // My custom Logout JSP. No auto-redirects to Login
+        return true;
+    }*/
+
     @GetMapping("/advertisements/{id}")
     public Advertisement getAdvertisementById(@PathVariable long id) {
         return advertisementService.loadById(id);
     }
 
     @PostMapping("/advertisements")
-    public List<String> saveAdvertisement(@RequestBody Advertisement advertisement, @RequestParam("id") long id) {
-        return advertisementService.saveAdvertisement(advertisement, id);
+    public List<String> saveAdvertisement(@RequestBody Advertisement advertisement,
+                                          @AuthenticationPrincipal User requester){
+        return advertisementService.saveAdvertisement(advertisement, requester);
     }
 
     @GetMapping("/advertisements")
     public List<Advertisement> getAdvertisements(
-            @RequestParam(value = "city", required = false) String city,
-            @RequestParam(value = "advertisementCategory", required = false) AdvertisementCategory advertisementCategory) {
-        return advertisementService.getAdvertisements(city, advertisementCategory);
+            @RequestParam(value = "city", required = false) City city,
+            @RequestParam(value = "advertisementCategory", required = false) AdvertisementCategory advertisementCategory,
+            @RequestParam(value = "contractType", required = false) ContractType contractType,
+            @RequestParam(value = "workingHours", required = false) WorkingHours workingHours,
+            @RequestParam(value = "createdBy", required = false) String createdBy) {
+        return advertisementService.getAdvertisements(city, advertisementCategory, contractType, workingHours, createdBy);
     }
 
     @PutMapping("/advertisements/{id}")
