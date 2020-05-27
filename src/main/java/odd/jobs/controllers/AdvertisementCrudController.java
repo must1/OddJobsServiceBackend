@@ -1,5 +1,6 @@
 package odd.jobs.controllers;
 
+import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.advertisement.advertisementEnum.City;
@@ -60,6 +61,16 @@ public class AdvertisementCrudController {
             @RequestParam(value = "workingHours", required = false) WorkingHours workingHours,
             @RequestParam(value = "createdBy", required = false) String createdBy) {
         return advertisementService.getAdvertisements(city, advertisementCategory, contractType, workingHours, createdBy);
+    }
+
+    @PutMapping("/advertisements/{id}")
+    public void feature(@PathVariable long id) throws NotFoundException {
+        advertisementService.feature(id);
+    }
+
+    @PatchMapping("/advertisements/{id}")
+    public void unfeature(@PathVariable long id) throws NotFoundException {
+        advertisementService.unfeature(id);
     }
 
 }
