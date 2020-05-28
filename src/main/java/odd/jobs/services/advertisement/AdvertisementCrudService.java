@@ -1,5 +1,6 @@
 package odd.jobs.services.advertisement;
 
+import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.advertisement.advertisementEnum.City;
@@ -9,7 +10,9 @@ import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.services.advertisement.validator.SaveAdvertisementValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -49,6 +52,7 @@ public class AdvertisementCrudService {
         if (requester.isBlocked()) {
             return Collections.singletonList("you are blocked");
         }
+
         SaveAdvertisementValidator validator = new SaveAdvertisementValidator();
         List<String> messages = validator.validate(advertisement);
         if (messages.isEmpty()) {
@@ -88,7 +92,23 @@ public class AdvertisementCrudService {
 
         return result.getResultList();
     }
+    public void feature(long id) throws NotFoundException {
+        Advertisement advertisement = advertisementRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Advertisement not found"));
+        advertisement = advertisement.toBuilder()
+                .featured(true)
+                .build();
+        advertisementRepository.save(advertisement);
+    }
 
+    public void unfeature(long id) throws NotFoundException {
+        Advertisement advertisement = advertisementRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Advertisement not found"));
+        advertisement = advertisement.toBuilder()
+                .featured(false)
+                .build();
+        advertisementRepository.save(advertisement);
+    }
     public Advertisement deleteAdvertisement(long id) {
         Advertisement advertisement = advertisementRepository.findById(id).orElse(null);
         advertisementRepository.deleteById(id);
