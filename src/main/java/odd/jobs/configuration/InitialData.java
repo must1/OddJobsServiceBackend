@@ -1,6 +1,7 @@
 package odd.jobs.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import odd.jobs.entities.advertisement.ReportedAdvertisement;
 import odd.jobs.entities.advertisement.advertisementEnum.City;
 import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
 import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
@@ -9,24 +10,29 @@ import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
+import odd.jobs.repositories.ReportedAdvertisementRepository;
 import odd.jobs.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Component
 @Slf4j
 public class InitialData {
+
     private final UserRepository userRepository;
     private final AdvertisementRepository advertisementRepository;
+    private final ReportedAdvertisementRepository reportedAdvertisementRepository;
 
     @Autowired
-    public InitialData(UserRepository userRepository, AdvertisementRepository advertisementRepository) {
+    public InitialData(UserRepository userRepository, AdvertisementRepository advertisementRepository, ReportedAdvertisementRepository reportedAdvertisementRepository) {
         this.userRepository = userRepository;
         this.advertisementRepository = advertisementRepository;
+        this.reportedAdvertisementRepository = reportedAdvertisementRepository;
     }
 
     @EventListener(ContextRefreshedEvent.class)

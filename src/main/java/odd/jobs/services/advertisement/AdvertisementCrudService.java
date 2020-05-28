@@ -89,4 +89,9 @@ public class AdvertisementCrudService {
         return result.getResultList();
     }
 
+    public Advertisement deleteAdvertisement(long id) {
+        Advertisement advertisement = advertisementRepository.findById(id).orElse(null);
+        advertisementRepository.deleteById(id);
+        return advertisement;
+    }
 }

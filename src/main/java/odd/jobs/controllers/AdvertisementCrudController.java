@@ -28,19 +28,6 @@ public class AdvertisementCrudController {
         this.advertisementService = advertisementService;
     }
 
-    /*@GetMapping("/logout")
-    public boolean myLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // Just for testing, the param is available:
-        System.out.println(request.getParameter("exitMsg"));
-        // Manual logoff
-        CookieClearingLogoutHandler cookieClearingLogoutHandler = new CookieClearingLogoutHandler(AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY);
-        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
-        cookieClearingLogoutHandler.logout(request, response, null);
-        securityContextLogoutHandler.logout(request, response, null);
-        // My custom Logout JSP. No auto-redirects to Login
-        return true;
-    }*/
-
     @GetMapping("/advertisements/{id}")
     public Advertisement getAdvertisementById(@PathVariable long id) {
         return advertisementService.loadById(id);
@@ -50,6 +37,11 @@ public class AdvertisementCrudController {
     public List<String> saveAdvertisement(@RequestBody Advertisement advertisement,
                                           @AuthenticationPrincipal User requester){
         return advertisementService.saveAdvertisement(advertisement, requester);
+    }
+
+    @DeleteMapping("/advertisements")
+    public Advertisement deleteAdvertisement(@RequestParam("id") long id) {
+        return advertisementService.deleteAdvertisement(id);
     }
 
     @GetMapping("/advertisements")

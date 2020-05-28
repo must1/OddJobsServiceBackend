@@ -9,23 +9,27 @@ import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.repositories.ReportedAdvertisementRepository;
 import odd.jobs.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReportedAdvertisementService {
 
     private final ReportedAdvertisementRepository reportedAdvertisementRepository;
     private final AdvertisementRepository advertisementRepository;
-
+    private final UserRepository userRepository;
 
     @Autowired
-    public ReportedAdvertisementService(ReportedAdvertisementRepository reportedAdvertisementRepository, AdvertisementRepository advertisementRepository) {
+    public ReportedAdvertisementService(ReportedAdvertisementRepository reportedAdvertisementRepository, AdvertisementRepository advertisementRepository, UserRepository userRepository) {
         this.reportedAdvertisementRepository = reportedAdvertisementRepository;
         this.advertisementRepository = advertisementRepository;
+        this.userRepository = userRepository;
     }
 
     public List<ReportedAdvertisement> getAllReportedAdvertisement() {
@@ -39,26 +43,30 @@ public class ReportedAdvertisementService {
                 .orElseThrow(() -> new NotFoundException("Reported advertisement not found"));
     }
 
-    public List<String> report(User requester, long advertisementId, String description) throws NotFoundException {
+    @Transactional
+    public List<String> report(User requester, ReportedAdvertisement reportedAdvertisement) throws NotFoundException {
         if (requester == null) {
             return Collections.singletonList("you need to log in to create advertisement");
         }
         if (requester.isBlocked()) {
             return Collections.singletonList("you are blocked");
         }
-        if (description.length() > 255) {
+        if (reportedAdvertisement.getDescription().length() > 255) {
             return Collections.singletonList("description is too long");
-        } else if (!description.matches("^\\s*[\\da-zA-Z][\\da-zA-Z\\s]*$")) {
+        } else if (!reportedAdvertisement.getDescription().matches("^\\s*[\\da-zA-Z][\\da-zA-Z\\s]*$")) {
             return Collections.singletonList("description contains illegal character");
         }
-        ReportedAdvertisement reportedAdvertisement = new ReportedAdvertisement();
-        Advertisement advertisement = advertisementRepository.findById(advertisementId)
-                .orElseThrow(() -> new NotFoundException("Advertisement with id " + advertisementId + " not found"));
-        reportedAdvertisement = reportedAdvertisement.toBuilder()
+        ReportedAdvertisement repAdvertisement = new ReportedAdvertisement();
+        Advertisement advertisement = advertisementRepository.findById(reportedAdvertisement.getAdvertisement().getAdvertisementID())
+                .orElseThrow(() -> new NotFoundException("Advertisement with id " + reportedAdvertisement.getAdvertisement().getAdvertisementID() + " not found"));
+
+        repAdvertisement = repAdvertisement.toBuilder()
                 .advertisement(advertisement)
                 .user(requester)
-                .description(description).build();
-        reportedAdvertisementRepository.save(reportedAdvertisement);
+                .description((reportedAdvertisement.getDescription())).build();
+        repAdvertisement.setAdvertisement(advertisement);
+        repAdvertisement.setUser(requester);
+        reportedAdvertisementRepository.save(repAdvertisement);
         return Collections.emptyList();
     }
 

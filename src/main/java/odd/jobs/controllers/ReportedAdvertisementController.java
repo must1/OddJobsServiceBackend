@@ -33,9 +33,8 @@ public class ReportedAdvertisementController {
     @PostMapping("/reported")
     public List<String> report(
             @AuthenticationPrincipal User requester,
-            @RequestParam(value = "advertisementId") long advertisementId,
-            @RequestParam(value = "description") String description) throws NotFoundException {
-        return reportedAdvertisementService.report(requester, advertisementId, description);
+            @RequestBody ReportedAdvertisement reportedAdvertisement) throws NotFoundException {
+        return reportedAdvertisementService.report(requester, reportedAdvertisement);
     }
 
     @PatchMapping("/reported/{id}")
