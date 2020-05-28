@@ -6,13 +6,18 @@ import odd.jobs.entities.user.User;
 import odd.jobs.repositories.UserRepository;
 import odd.jobs.services.user.availability.UserAvailabilityChecker;
 import odd.jobs.services.user.validator.SaveUserValidator;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Service
@@ -48,6 +53,7 @@ public class UserCrudService implements UserDetailsService {
             userRepository.save(user.toBuilder()
                     .password(passwordEncoder.encode(user.getPassword()))
                     .role(Role.USER)
+                    .photo("defaultUserPhoto.png")
                     .build());
         }
         return messages;
@@ -90,6 +96,18 @@ public class UserCrudService implements UserDetailsService {
         }
         userRepository.save(userToBlock.toBuilder()
                 .isBlocked(true)
+                .build());
+        return true;
+    }
+
+    public boolean saveUserImg(User reporter, MultipartFile imageFile) throws Exception{
+        System.out.println(imageFile);
+        String folderPath = Paths.get(".").toAbsolutePath() + "/src/main/resources/photos/";
+        String uniqueName = String.format("%s%s", RandomStringUtils.randomAlphanumeric(12), imageFile.getOriginalFilename());
+        Path path = Paths.get(folderPath + uniqueName);
+        Files.write(path, imageFile.getBytes());
+        userRepository.save(reporter.toBuilder()
+                .photo(uniqueName)
                 .build());
         return true;
     }

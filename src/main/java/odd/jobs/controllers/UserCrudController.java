@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -46,5 +47,11 @@ public class UserCrudController {
     public boolean blockUser(@PathVariable String username,
                              @AuthenticationPrincipal User reporter) throws NotFoundException {
         return userService.blockUser(username, reporter);
+    }
+
+    @PatchMapping("/users/img")
+    public boolean uploadImage(@AuthenticationPrincipal User reporter,
+                              @RequestParam("image") MultipartFile imageFile) throws Exception {
+        return userService.saveUserImg(reporter, imageFile);
     }
 }
