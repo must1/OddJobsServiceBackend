@@ -69,7 +69,8 @@ public class InitialData {
                 .password("$2a$10$UPRK/oWCc3e.yTb5TLvGG.CdJP8aGP6jNJH.LCtvQhgvigse83VZG")//admin
                 .phoneNumber("111111111")
                 .role(Role.ADMIN)
-                .photo("defaultUserPhoto.png")
+                .photo("piotr-to-plaga.png")
+                //.photo("RkiY54TDfygUrazdwaczy.png")
                 .build());
     }
 
