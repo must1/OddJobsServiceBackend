@@ -41,7 +41,7 @@ public class AdvertisementCrudController {
     }
 
     @DeleteMapping("/advertisements")
-    public Advertisement deleteAdvertisement(@RequestParam("id") long id) {
+    public boolean deleteAdvertisement(@RequestParam("id") long id) {
         return advertisementService.deleteAdvertisement(id);
     }
 

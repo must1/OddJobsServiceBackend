@@ -24,16 +24,16 @@ public class PhotoCrudController {
 
     @PatchMapping("/users/img")
     public void uploadImage(@AuthenticationPrincipal User reporter,
-                               @RequestParam("image") MultipartFile imageFile) throws Exception {
+                            @RequestParam("image") MultipartFile imageFile) {
         photoService.saveFile(reporter, imageFile);
     }
 
     @GetMapping("/users/img/{username}")
-    public ResponseEntity<ByteArrayResource> downloadImage(@PathVariable String username){
+    public ResponseEntity<ByteArrayResource> downloadImage(@PathVariable String username) {
         Photo photo = photoService.getUserPhoto(username).get();
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(photo.getType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment:filename=\""+photo.getFileName()+"\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename=\"" + photo.getFileName() + "\"")
                 .body(new ByteArrayResource(photo.getData()));
     }
 }
