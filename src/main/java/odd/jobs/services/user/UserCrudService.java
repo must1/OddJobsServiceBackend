@@ -53,7 +53,7 @@ public class UserCrudService implements UserDetailsService {
             userRepository.save(user.toBuilder()
                     .password(passwordEncoder.encode(user.getPassword()))
                     .role(Role.USER)
-                    .photo("defaultUserPhoto.png")
+                    .photoId(1)
                     .build());
         }
         return messages;
@@ -98,24 +98,5 @@ public class UserCrudService implements UserDetailsService {
                 .isBlocked(true)
                 .build());
         return true;
-    }
-
-    public boolean saveUserImg(User reporter, MultipartFile imageFile) throws Exception{
-        System.out.println(imageFile);
-        String folderPath = Paths.get(".").toAbsolutePath() + "/src/main/resources/photos/";
-        //String uniqueName = String.format("%s%s", RandomStringUtils.randomAlphanumeric(12), imageFile.getOriginalFilename());
-        String uniqueName = imageFile.getOriginalFilename();
-        Path path = Paths.get(folderPath + uniqueName);
-        Files.write(path, imageFile.getBytes());
-        userRepository.save(reporter.toBuilder()
-                .photo(uniqueName)
-                .build());
-        return true;
-    }
-
-    public String getUserPhotoPath(String username) throws NotFoundException{
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("User not found"));
-        return user.getPhoto();
     }
 }

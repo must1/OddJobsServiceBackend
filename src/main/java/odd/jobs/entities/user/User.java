@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(columnDefinition = "boolean default false")
     private boolean isBlocked;
     private Role role;
-    private String photo;
+    private long photoId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

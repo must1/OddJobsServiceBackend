@@ -1,23 +1,25 @@
 package odd.jobs.configuration;
 
 import lombok.extern.slf4j.Slf4j;
-import odd.jobs.entities.advertisement.ReportedAdvertisement;
 import odd.jobs.entities.advertisement.advertisementEnum.City;
 import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
 import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
+import odd.jobs.entities.photo.Photo;
 import odd.jobs.entities.user.Role;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
+import odd.jobs.repositories.PhotoRepository;
 import odd.jobs.repositories.ReportedAdvertisementRepository;
 import odd.jobs.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.apache.commons.io.IOUtils;
 
-import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Component
@@ -27,17 +29,35 @@ public class InitialData {
     private final UserRepository userRepository;
     private final AdvertisementRepository advertisementRepository;
     private final ReportedAdvertisementRepository reportedAdvertisementRepository;
+    private final PhotoRepository photoRepository;
 
     @Autowired
-    public InitialData(UserRepository userRepository, AdvertisementRepository advertisementRepository, ReportedAdvertisementRepository reportedAdvertisementRepository) {
+    public InitialData(UserRepository userRepository, AdvertisementRepository advertisementRepository, ReportedAdvertisementRepository reportedAdvertisementRepository, PhotoRepository photoRepository) {
         this.userRepository = userRepository;
         this.advertisementRepository = advertisementRepository;
         this.reportedAdvertisementRepository = reportedAdvertisementRepository;
+        this.photoRepository = photoRepository;
     }
 
     @EventListener(ContextRefreshedEvent.class)
     public void addUsersToDB() {
         log.info("Persisted account data to database");
+
+        byte[] photoBytes;
+        Photo photo;
+        try {
+            photoBytes = IOUtils.toByteArray(getClass().getResourceAsStream("/photos/defaultUserPhoto.png"));
+            photo = Photo.builder()
+                    .data(photoBytes)
+                    .fileName("defaultUserPhoto")
+                    .type("image/png")
+                    .photoId(0)
+                    .build();
+            photoRepository.save(photo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         userRepository.save(User.builder()
                 .firstName("Macko")
@@ -47,7 +67,7 @@ public class InitialData {
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
                 .phoneNumber("213702137")
                 .role(Role.USER)
-                .photo("defaultUserPhoto.png")
+                .photoId(0)
                 .build());
 
         userRepository.save(User.builder()
@@ -58,7 +78,7 @@ public class InitialData {
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
                 .phoneNumber("696969696")
                 .role(Role.USER)
-                .photo("defaultUserPhoto.png")
+                .photoId(0)
                 .build());
 
         userRepository.save(User.builder()
@@ -69,8 +89,7 @@ public class InitialData {
                 .password("$2a$10$UPRK/oWCc3e.yTb5TLvGG.CdJP8aGP6jNJH.LCtvQhgvigse83VZG")//admin
                 .phoneNumber("111111111")
                 .role(Role.ADMIN)
-                .photo("piotr-to-plaga.png")
-                //.photo("RkiY54TDfygUrazdwaczy.png")
+                .photoId(0)
                 .build());
     }
 
