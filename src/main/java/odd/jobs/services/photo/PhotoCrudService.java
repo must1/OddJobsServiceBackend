@@ -4,6 +4,7 @@ import odd.jobs.entities.photo.Photo;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.PhotoRepository;
 import odd.jobs.repositories.UserRepository;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +24,7 @@ public class PhotoCrudService {
     public void saveFile(User user, MultipartFile file) {
         try {
             Photo photo = photoRepository.save(Photo.builder()
-                    .fileName(file.getOriginalFilename())
+                    .fileName(String.format("%s%s", RandomStringUtils.randomAlphanumeric(12), file.getOriginalFilename()))
                     .type(file.getContentType())
                     .data(file.getBytes())
                     .build());
