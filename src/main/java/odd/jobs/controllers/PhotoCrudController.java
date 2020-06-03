@@ -23,9 +23,10 @@ public class PhotoCrudController {
     }
 
     @PatchMapping("/users/img")
-    public void uploadImage(@AuthenticationPrincipal User reporter,
+    public boolean uploadImage(@AuthenticationPrincipal User reporter,
                                @RequestParam("image") MultipartFile imageFile) throws Exception {
         photoService.saveFile(reporter, imageFile);
+        return true;
     }
 
     @GetMapping("/users/img/{username}")
