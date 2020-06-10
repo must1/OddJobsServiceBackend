@@ -10,9 +10,7 @@ import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.services.advertisement.validator.SaveAdvertisementValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -109,9 +107,9 @@ public class AdvertisementCrudService {
                 .build();
         advertisementRepository.save(advertisement);
     }
-    public Advertisement deleteAdvertisement(long id) {
+    public boolean deleteAdvertisement(long id) {
         Advertisement advertisement = advertisementRepository.findById(id).orElse(null);
         advertisementRepository.deleteById(id);
-        return advertisement;
+        return true;
     }
 }

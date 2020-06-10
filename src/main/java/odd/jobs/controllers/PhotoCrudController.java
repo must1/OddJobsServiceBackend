@@ -30,11 +30,11 @@ public class PhotoCrudController {
     }
 
     @GetMapping("/users/img/{username}")
-    public ResponseEntity<ByteArrayResource> downloadImage(@PathVariable String username){
+    public ResponseEntity<ByteArrayResource> downloadImage(@PathVariable String username) {
         Photo photo = photoService.getUserPhoto(username).get();
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(photo.getType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment:filename=\""+photo.getFileName()+"\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename=\"" + photo.getFileName() + "\"")
                 .body(new ByteArrayResource(photo.getData()));
     }
 }
