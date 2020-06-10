@@ -44,7 +44,7 @@ public class InitialData {
         log.info("Persisted account data to database");
 
         byte[] photoBytes;
-        Photo photo;
+        Photo photo = null;
         try {
             photoBytes = IOUtils.toByteArray(getClass().getResourceAsStream("/photos/defaultUserPhoto.png"));
             photo = Photo.builder()
@@ -67,7 +67,7 @@ public class InitialData {
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
                 .phoneNumber("213702137")
                 .role(Role.USER)
-                .photoId(1)
+                .photoId(photo.getPhotoId())
                 .build());
 
         userRepository.save(User.builder()
@@ -78,7 +78,7 @@ public class InitialData {
                 .password("$2a$10$3g4oIfNqX51bvq7pICs1ReHex8tfb3Dp3eJ9U.MvrX.aPXF7folb6")//123
                 .phoneNumber("696969696")
                 .role(Role.USER)
-                .photoId(1)
+                .photoId(photo.getPhotoId())
                 .build());
 
         userRepository.save(User.builder()
@@ -89,7 +89,7 @@ public class InitialData {
                 .password("$2a$10$UPRK/oWCc3e.yTb5TLvGG.CdJP8aGP6jNJH.LCtvQhgvigse83VZG")//admin
                 .phoneNumber("111111111")
                 .role(Role.ADMIN)
-                .photoId(1)
+                .photoId(photo.getPhotoId())
                 .build());
     }
 
