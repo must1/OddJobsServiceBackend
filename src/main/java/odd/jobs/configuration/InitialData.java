@@ -5,7 +5,7 @@ import odd.jobs.entities.advertisement.advertisementEnum.City;
 import odd.jobs.entities.advertisement.advertisementEnum.ContractType;
 import odd.jobs.entities.advertisement.advertisementEnum.WorkingHours;
 import odd.jobs.entities.photo.Photo;
-import odd.jobs.entities.user.Role;
+import odd.jobs.entities.user.userEnum.Role;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
 import odd.jobs.entities.user.User;
@@ -28,14 +28,12 @@ public class InitialData {
 
     private final UserRepository userRepository;
     private final AdvertisementRepository advertisementRepository;
-    private final ReportedAdvertisementRepository reportedAdvertisementRepository;
     private final PhotoRepository photoRepository;
 
     @Autowired
     public InitialData(UserRepository userRepository, AdvertisementRepository advertisementRepository, ReportedAdvertisementRepository reportedAdvertisementRepository, PhotoRepository photoRepository) {
         this.userRepository = userRepository;
         this.advertisementRepository = advertisementRepository;
-        this.reportedAdvertisementRepository = reportedAdvertisementRepository;
         this.photoRepository = photoRepository;
     }
 
@@ -51,7 +49,6 @@ public class InitialData {
                     .data(photoBytes)
                     .fileName("defaultUserPhoto")
                     .type("image/png")
-                    .photoId(1)
                     .build();
             photoRepository.save(photo);
         } catch (IOException e) {

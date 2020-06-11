@@ -36,7 +36,7 @@ public class AdvertisementCrudController {
 
     @PostMapping("/advertisements")
     public List<String> saveAdvertisement(@RequestBody Advertisement advertisement,
-                                          @AuthenticationPrincipal User requester){
+                                          @AuthenticationPrincipal User requester) {
         return advertisementService.saveAdvertisement(advertisement, requester);
     }
 
@@ -54,15 +54,4 @@ public class AdvertisementCrudController {
             @RequestParam(value = "createdBy", required = false) String createdBy) {
         return advertisementService.getAdvertisements(city, advertisementCategory, contractType, workingHours, createdBy);
     }
-
-    @PutMapping("/advertisements/{id}")
-    public void feature(@PathVariable long id) throws NotFoundException {
-        advertisementService.feature(id);
-    }
-
-    @PatchMapping("/advertisements/{id}")
-    public void unfeature(@PathVariable long id) throws NotFoundException {
-        advertisementService.unfeature(id);
-    }
-
 }

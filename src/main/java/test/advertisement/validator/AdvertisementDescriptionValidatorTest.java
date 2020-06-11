@@ -1,7 +1,7 @@
 package test.advertisement.validator;
 
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.services.advertisement.validator.components.AdvertisementDescriptionValidator;
+import odd.jobs.services.advertisement.validator.checkers.AdvertisementDescriptionValidator;
 import org.junit.jupiter.api.*;
 
 import java.util.Random;

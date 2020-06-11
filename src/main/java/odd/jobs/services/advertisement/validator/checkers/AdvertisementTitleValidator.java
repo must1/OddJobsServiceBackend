@@ -1,4 +1,4 @@
-package odd.jobs.services.advertisement.validator.components;
+package odd.jobs.services.advertisement.validator.checkers;
 
 import odd.jobs.entities.advertisement.Advertisement;
 

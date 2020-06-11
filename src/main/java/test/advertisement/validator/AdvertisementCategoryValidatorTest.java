@@ -2,7 +2,7 @@ package test.advertisement.validator;
 
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.advertisementEnum.AdvertisementCategory;
-import odd.jobs.services.advertisement.validator.components.AdvertisementCategoryValidator;
+import odd.jobs.services.advertisement.validator.checkers.AdvertisementCategoryValidator;
 import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

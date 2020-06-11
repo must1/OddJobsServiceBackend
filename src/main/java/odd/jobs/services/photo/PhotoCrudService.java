@@ -31,13 +31,12 @@ public class PhotoCrudService {
             userRepository.save(user.toBuilder()
                     .photoId(photo.getPhotoId())
                     .build());
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Optional<Photo> getUserPhoto(String username){
+    public Optional<Photo> getUserPhoto(String username) {
         return photoRepository.findById(userRepository.findByUsername(username)
                 .get().getPhotoId());
     }

@@ -1,10 +1,10 @@
 package odd.jobs.services.advertisement.validator;
 
 import odd.jobs.entities.advertisement.Advertisement;
-import odd.jobs.services.advertisement.validator.components.AdvertisementCategoryValidator;
-import odd.jobs.services.advertisement.validator.components.AdvertisementDescriptionValidator;
-import odd.jobs.services.advertisement.validator.components.AdvertisementTitleValidator;
-import odd.jobs.services.advertisement.validator.components.IAdvertisementAttributesValidator;
+import odd.jobs.services.advertisement.validator.checkers.AdvertisementCategoryValidator;
+import odd.jobs.services.advertisement.validator.checkers.AdvertisementDescriptionValidator;
+import odd.jobs.services.advertisement.validator.checkers.AdvertisementTitleValidator;
+import odd.jobs.services.advertisement.validator.checkers.IAdvertisementAttributesValidator;
 
 import java.util.ArrayList;
 import java.util.List;

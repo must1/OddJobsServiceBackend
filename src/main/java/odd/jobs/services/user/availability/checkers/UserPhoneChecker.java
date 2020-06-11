@@ -1,20 +1,20 @@
-package odd.jobs.services.user.availability.components;
+package odd.jobs.services.user.availability.checkers;
 
 import javassist.NotFoundException;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.UserRepository;
 
-public class UsernameChecker implements IUserAvailabilityChecker {
+public class UserPhoneChecker implements IUserAvailabilityChecker {
 
     @Override
     public String check(User user, UserRepository userRepository) {
         try{
-            userRepository.findByUsername(user.getUsername())
+            userRepository.findByPhoneNumber(user.getPhoneNumber())
                     .orElseThrow(() -> new NotFoundException("User not found"));
         }
         catch (NotFoundException ex){
             return null;
         }
-        return "User with given username already exists";
+        return "User with given phone number already exists";
     }
 }

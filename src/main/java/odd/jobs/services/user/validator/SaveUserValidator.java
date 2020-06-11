@@ -1,7 +1,7 @@
 package odd.jobs.services.user.validator;
 
 import odd.jobs.entities.user.User;
-import odd.jobs.services.user.validator.components.*;
+import odd.jobs.services.user.validator.checkers.*;
 
 import java.util.ArrayList;
 import java.util.List;

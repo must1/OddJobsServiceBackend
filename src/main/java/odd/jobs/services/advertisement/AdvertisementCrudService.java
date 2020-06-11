@@ -90,23 +90,7 @@ public class AdvertisementCrudService {
 
         return result.getResultList();
     }
-    public void feature(long id) throws NotFoundException {
-        Advertisement advertisement = advertisementRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Advertisement not found"));
-        advertisement = advertisement.toBuilder()
-                .featured(true)
-                .build();
-        advertisementRepository.save(advertisement);
-    }
 
-    public void unfeature(long id) throws NotFoundException {
-        Advertisement advertisement = advertisementRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Advertisement not found"));
-        advertisement = advertisement.toBuilder()
-                .featured(false)
-                .build();
-        advertisementRepository.save(advertisement);
-    }
     public boolean deleteAdvertisement(long id) {
         Advertisement advertisement = advertisementRepository.findById(id).orElse(null);
         advertisementRepository.deleteById(id);

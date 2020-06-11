@@ -1,15 +1,15 @@
 package test.user.validator;
 
 import odd.jobs.entities.user.User;
-import odd.jobs.services.user.validator.components.UserEmailValidator;
+import odd.jobs.services.user.validator.checkers.UserEmailValidator;
 import org.junit.jupiter.api.*;
 
 import java.util.Random;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserEmailValidatorTest {
-    UserEmailValidator userEmailValidator;
-    User user;
+    private UserEmailValidator userEmailValidator;
+    private User user;
 
     @BeforeAll
     void validatorInit() {

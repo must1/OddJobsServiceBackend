@@ -14,17 +14,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
-public class PhotoCrudController {
+public class PhotoController {
     private final PhotoCrudService photoService;
 
     @Autowired
-    public PhotoCrudController(PhotoCrudService photoService) {
+    public PhotoController(PhotoCrudService photoService) {
         this.photoService = photoService;
     }
 
     @PatchMapping("/users/img")
     public boolean uploadImage(@AuthenticationPrincipal User reporter,
-                               @RequestParam("image") MultipartFile imageFile) throws Exception {
+                               @RequestParam("image") MultipartFile imageFile) {
         photoService.saveFile(reporter, imageFile);
         return true;
     }

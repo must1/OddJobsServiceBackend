@@ -2,7 +2,7 @@ package odd.jobs.services.user;
 
 import javassist.NotFoundException;
 import odd.jobs.entities.photo.Photo;
-import odd.jobs.entities.user.Role;
+import odd.jobs.entities.user.userEnum.Role;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.PhotoRepository;
 import odd.jobs.repositories.UserRepository;

@@ -2,10 +2,10 @@ package odd.jobs.services.user.availability;
 
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.UserRepository;
-import odd.jobs.services.user.availability.components.IUserAvailabilityChecker;
-import odd.jobs.services.user.availability.components.UserEmailChecker;
-import odd.jobs.services.user.availability.components.UserPhoneChecker;
-import odd.jobs.services.user.availability.components.UsernameChecker;
+import odd.jobs.services.user.availability.checkers.IUserAvailabilityChecker;
+import odd.jobs.services.user.availability.checkers.UserEmailChecker;
+import odd.jobs.services.user.availability.checkers.UserPhoneChecker;
+import odd.jobs.services.user.availability.checkers.UsernameChecker;
 
 import java.util.ArrayList;
 import java.util.List;

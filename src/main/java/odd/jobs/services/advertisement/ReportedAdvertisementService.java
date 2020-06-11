@@ -3,20 +3,18 @@ package odd.jobs.services.advertisement;
 import javassist.NotFoundException;
 import odd.jobs.entities.advertisement.Advertisement;
 import odd.jobs.entities.advertisement.ReportedAdvertisement;
-import odd.jobs.entities.user.Role;
+import odd.jobs.entities.user.userEnum.Role;
 import odd.jobs.entities.user.User;
 import odd.jobs.repositories.AdvertisementRepository;
 import odd.jobs.repositories.ReportedAdvertisementRepository;
 import odd.jobs.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReportedAdvertisementService {

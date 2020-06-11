@@ -1,8 +1,7 @@
 package test.user.validator;
 
 import odd.jobs.entities.user.User;
-import odd.jobs.services.user.validator.components.UserPasswordValidator;
-import odd.jobs.services.user.validator.components.UserPhoneValidator;
+import odd.jobs.services.user.validator.checkers.UserPhoneValidator;
 import org.junit.jupiter.api.*;
 
 import java.util.Random;

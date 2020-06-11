@@ -1,4 +1,4 @@
-package odd.jobs.services.user.validator.components;
+package odd.jobs.services.user.validator.checkers;
 
 import odd.jobs.entities.user.User;
 
